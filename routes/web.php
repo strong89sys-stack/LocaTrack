@@ -1,38 +1,161 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\AppareilController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\EquipementController;
 use App\Http\Controllers\DashboardController;
-use App\Models\Equipement;
-// use App\Models\Statut;
+use App\Http\Controllers\EquipementController;
+use App\Http\Controllers\LiveTrackingController;
+use App\Http\Controllers\LocationController;
 
 Route::inertia('/', 'auth/login')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard
+    |--------------------------------------------------------------------------
+    */
 
-    Route::put('/equipements/{id}', [EquipementController::class, 'updateEquipement']);
-    Route::delete('equipements/{id}', [EquipementController::class, 'deleteEquipement']);
+    Route::get(
+        '/dashboard',
+        [DashboardController::class, 'index']
+    )->name('dashboard');
 
-    Route::get('/tracking', [ClientController::class, 'index'])->name('tracking');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Équipements
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/equipements',
+        [EquipementController::class, 'index']
+    )->name('equipements_list');
+
+    Route::get(
+        '/equipements/create-form',
+        [EquipementController::class, 'EquipementForm']
+    )->name('equipements.create');
+
+    Route::post(
+        '/equipements/create',
+        [EquipementController::class, 'createEquipement']
+    )->name('equipements.store');
+
+    Route::put(
+        '/equipements/{id}',
+        [EquipementController::class, 'updateEquipement']
+    )->name('equipements.update');
+
+    Route::delete(
+        '/equipements/{id}',
+        [EquipementController::class, 'deleteEquipement']
+    )->name('equipements.delete');
+
+    Route::get(
+        '/equipements/{id}',
+        [EquipementController::class, 'oneEquipement']
+    )->name('equipements.show');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Appareils
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/appareils/create-form',
+        [AppareilController::class, 'AppareilForm']
+    )->name('appareils.create');
+
+    Route::post(
+        '/appareils/create',
+        [AppareilController::class, 'createAppareil']
+    )->name('appareils.store');
+
+    Route::get(
+        '/appareils/{id}',
+        [AppareilController::class, 'oneAppareil']
+    )->name('appareils.show');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tracking
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/tracking',
+        [LiveTrackingController::class, 'index']
+    )->name('tracking');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Locations
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/locations',
+        [LocationController::class, 'index']
+    )->name('location');
+
+    Route::get(
+        '/locations/form',
+        [LocationController::class, 'showForm']
+    )->name('locations.create');
+
+    Route::post(
+        '/locations/create',
+        [LocationController::class, 'createLocation']
+    )->name('locations.store');
+
+    Route::put(
+        '/locations/{location}/expire',
+        [LocationController::class, 'expire']
+    )->name('locations.expire');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Clients
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/clients/form',
+        [ClientController::class, 'formShow']
+    )->name('clients.create');
+
+    Route::post(
+        '/clients/create',
+        [ClientController::class, 'createClient']
+    )->name('clients.store');
 });
 
-Route::get('/clients', [ClientController::class, 'index']);
-Route::get('/clients/form', [ClientController::class, 'formShow']);
-Route::post('/clients/create', [ClientController::class, 'createClient']);
 
-// Equipement_Route
-Route::get('/equipements', [EquipementController::class, 'index']);
-Route::get('/equipements/create-form', [EquipementController::class, 'EquipementForm']);
-Route::post('/equipements/create', [EquipementController::class,'createEquipement']);
+/*
+|--------------------------------------------------------------------------
+| Clients publics
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/clients',
+    [ClientController::class, 'index']
+);
+
+Route::get(
+    '/clients/{client}',
+    [ClientController::class, 'oneClient']
+);
 
 
-
-
-Route::get('clients/{client}', [ClientController::class, "oneClient"]);
-Route::get('equipements/{id}', [EquipementController::class, 'oneEquipement']);
-
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';

@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained('clients', 'id')->onDelete('cascade');
             $table->foreignId('equipement_id')->constrained('equipements', 'id')->onDelete('cascade');
-            $table->foreignId('zone_geofence_id')->constrained('zone_geofences', 'id')->onDelete('cascade');
+            $table->foreignId('zone_geofence_id')->nullable(true)->constrained('zone_geofences', 'id')->onDelete('cascade');
             $table->date('date_debut');
             $table->date('date_fin');
-            $table->string('statut');
+            $table->string('statut')->nullable(true)->default('en_cours');
             $table->timestamps();
         });
     }

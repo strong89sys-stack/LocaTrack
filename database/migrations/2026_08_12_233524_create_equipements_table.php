@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string('libelle');
             $table->timestamps();
         });
-    
+
         Schema::create('equipements', function(Blueprint $table){
             $table->id();
             $table->string('reference')->unique();
             $table->string('marque');
             $table->string('modele');
-            $table->string('image')->nullable();
+            $table->string('image')->nullable(true);
             $table->foreignId('statut_id')->constrained('statuts', 'id');
             $table->timestamps();
         });

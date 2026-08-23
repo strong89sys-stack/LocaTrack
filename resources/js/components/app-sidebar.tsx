@@ -35,7 +35,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Location',
-        href: '/contrats',
+        href: '/locations',
         icon: ScrollText,
     },
     {
@@ -45,7 +45,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Alertes',
-        href: '/alerts',
+        href: '/alertes',
         icon: BellRing,
     },
     {
