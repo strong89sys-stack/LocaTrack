@@ -19,14 +19,14 @@ class AppareilFactory extends Factory
     public function definition(): array
     {
         return [
-            'imei'=>fake()->unique()->numerify('###############'),
-            'numero_sim'=>fake()->phoneNumber(),
-            'niveau_batterie'=>fake()->numberBetween(0,100),
-            'statut'=>fake()->randomElement([
+            'imei' => fake()->unique()->numerify('###############'),
+            'numero_sim' => fake()->phoneNumber(),
+            'niveau_batterie' => fake()->numberBetween(0, 100),
+            'statut' => fake()->randomElement([
                 'éteint',
-                'allumé'
+                'allumé',
             ]),
-            'equipement_id'=>Equipement::factory(),
+            'equipement_id' => Equipement::factory(),
         ];
     }
 }

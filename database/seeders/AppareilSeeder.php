@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Appareil;
 use App\Models\Equipement;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AppareilSeeder extends Seeder

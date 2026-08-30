@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Equipement;
 use App\Models\Alerte;
+use App\Models\Equipement;
 use Illuminate\Support\Facades\DB;
 
 class LiveTrackingController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $equipements = Equipement::with([
             'statut',
             'appareil',
             'dernierePositionGps',
         ])
-        ->get([
-            'id',
-            'reference',
-            'marque',
-            'modele',
-            'statut_id',
-            'image',
-        ]);
+            ->get([
+                'id',
+                'reference',
+                'marque',
+                'modele',
+                'statut_id',
+                'image',
+            ]);
 
         $equipements = $equipements->map(function ($equipement) {
 
@@ -57,6 +57,7 @@ class LiveTrackingController extends Controller
                         [$position->coordonnees]
                     )->longitude,
 
+                    'adresse' => $position->adresse,
                     'vitesse' => $position->vitesse,
                     'date_heure' => $position->date_heure,
                 ] : null,

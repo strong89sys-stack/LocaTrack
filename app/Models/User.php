@@ -31,7 +31,8 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class);
     }
 

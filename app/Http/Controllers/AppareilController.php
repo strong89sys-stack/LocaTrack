@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Appareil;
 use App\Models\Equipement;
+use Illuminate\Http\Request;
 
 class AppareilController extends Controller
 {
@@ -59,7 +59,7 @@ class AppareilController extends Controller
         $appareil = Appareil::findOrFail($id);
 
         $validate = $request->validate([
-            'imei' => 'required|string|max:255|unique:appareils,imei,' . $appareil->id,
+            'imei' => 'required|string|max:255|unique:appareils,imei,'.$appareil->id,
             'numero_sim' => 'required|string|max:255',
             'niveau_batterie' => 'required|integer|min:0|max:100',
             'statut' => 'required|string|max:255',

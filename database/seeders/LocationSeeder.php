@@ -6,7 +6,6 @@ use App\Models\Client;
 use App\Models\Equipement;
 use App\Models\Location;
 use App\Models\ZoneGeofence;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LocationSeeder extends Seeder

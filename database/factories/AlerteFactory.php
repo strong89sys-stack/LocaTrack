@@ -22,19 +22,19 @@ class AlerteFactory extends Factory
         $resolue = fake()->boolean();
 
         return [
-            'equipement_id'=>Equipement::factory(),
-            'type'=>fake()->randomElement([
+            'equipement_id' => Equipement::factory(),
+            'type' => fake()->randomElement([
                 'sortie de zone',
                 'batterie faible',
-                'appareil hors ligne'
+                'appareil hors ligne',
             ]),
-            'gravite'=>fake()->randomElement([
+            'gravite' => fake()->randomElement([
                 'faible',
                 'moyenne',
-                'critique'
+                'critique',
             ]),
-            'resolue'=>$resolue,
-            'date_resolution'=>$resolue
+            'resolue' => $resolue,
+            'date_resolution' => $resolue
                 ? fake()->dateTimeBetween('-30 days', 'now')
                 : null,
         ];

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create("zone_geofences", function (Blueprint $table) {
+        Schema::create('zone_geofences', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
             $table->geometry('centre', subtype: 'point', srid: 4326);

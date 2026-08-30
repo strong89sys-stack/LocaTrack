@@ -1,13 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\AppareilController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EquipementController;
+use App\Http\Controllers\GpsController;
 use App\Http\Controllers\LiveTrackingController;
 use App\Http\Controllers\LocationController;
+use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'auth/login')->name('home');
 
@@ -23,7 +23,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         '/dashboard',
         [DashboardController::class, 'index']
     )->name('dashboard');
-
 
     /*
     |--------------------------------------------------------------------------
@@ -61,6 +60,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         [EquipementController::class, 'oneEquipement']
     )->name('equipements.show');
 
+    Route::put(
+        '/equipements/{id}/statut',
+        [EquipementController::class, 'updateStatut']
+    )->name('equipements.statut.update');
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +86,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         [AppareilController::class, 'oneAppareil']
     )->name('appareils.show');
 
-
     /*
     |--------------------------------------------------------------------------
     | Tracking
@@ -94,7 +96,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         '/tracking',
         [LiveTrackingController::class, 'index']
     )->name('tracking');
-
 
     /*
     |--------------------------------------------------------------------------
@@ -122,6 +123,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         [LocationController::class, 'expire']
     )->name('locations.expire');
 
+    Route::put(
+        '/locations/{location}/prolonger',
+        [LocationController::class, 'prolonger']
+    )->name('locations.prolonger');
 
     /*
     |--------------------------------------------------------------------------
@@ -140,22 +145,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
     )->name('clients.store');
 });
 
-
 /*
 |--------------------------------------------------------------------------
 | Clients publics
 |--------------------------------------------------------------------------
 */
 
-Route::get(
-    '/clients',
-    [ClientController::class, 'index']
-);
+// Route::get(
+//     '/clients',
+//     [ClientController::class, 'index']
+// );
 
-Route::get(
-    '/clients/{client}',
-    [ClientController::class, 'oneClient']
-);
+// Route::get(
+//     '/clients/{client}',
+//     [ClientController::class, 'oneClient']
+// );
 
+/*
+|--------------------------------------------------------------------------
+| GPS
+|--------------------------------------------------------------------------
+*/
 
-require __DIR__ . '/settings.php';
+// Route::post(
+//     '/gps/positions',
+//     [GpsController::class, 'store']
+// )->name('gps.store');
+
+require __DIR__.'/settings.php';

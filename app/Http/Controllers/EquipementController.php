@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipement;
-use App\Models\Statut;
 use App\Models\Alerte;
 use App\Models\Appareil;
+use App\Models\Equipement;
+use App\Models\Location;
+use App\Models\Statut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class EquipementController extends Controller
 {
-
     public function index()
     {
         $equipements = Equipement::with([
@@ -20,17 +20,16 @@ class EquipementController extends Controller
             'appareil',
             'dernierePositionGps',
         ])
-        ->get([
-            'id',
-            'reference',
-            'marque',
-            'modele',
-            'statut_id',
-            'image',
-        ]);
+            ->get([
+                'id',
+                'reference',
+                'marque',
+                'modele',
+                'statut_id',
+                'image',
+            ]);
 
         $equipements = $equipements->map(function ($equipement) {
-
             $position = $equipement->dernierePositionGps;
 
             return [
@@ -62,13 +61,13 @@ class EquipementController extends Controller
                         [$position->coordonnees]
                     )->longitude,
 
+                    'adresse' => $position->adresse,
                     'vitesse' => $position->vitesse,
                     'date_heure' => $position->date_heure,
                 ] : null,
             ];
         });
 
-        // TOUS les appareils, rattachés ou non
         $appareils = Appareil::with('equipement')
             ->get([
                 'id',
@@ -79,7 +78,10 @@ class EquipementController extends Controller
                 'equipement_id',
             ]);
 
-        $alertesActives = Alerte::where('resolue', false)->count();
+        $alertesActives = Alerte::where(
+            'resolue',
+            false
+        )->count();
 
         return inertia('equipements/index', [
             'equipements' => $equipements,
@@ -88,105 +90,191 @@ class EquipementController extends Controller
         ]);
     }
 
-    public function oneEquipement($id){
-        $equipement = Equipement::findOrFail($id);
+    public function oneEquipement($id)
+    {
+        $equipement = Equipement::with('statut')
+            ->findOrFail($id);
+
+        $statuts = Statut::all();
+
+        $enLocation = Location::where(
+            'equipement_id',
+            $equipement->id
+        )
+            ->where('statut', 'en_cours')
+            ->exists();
 
         return inertia('equipements/show', [
-            'equipement' => $equipement
+            'equipement' => $equipement,
+            'statuts' => $statuts,
+            'enLocation' => $enLocation,
         ]);
     }
 
-    public function EquipementForm(){
-        $statuts = Statut::all();
-        return inertia('equipements/CreateEquipement', [
-            'statuts'=> $statuts
+    public function updateStatut(Request $request, $id)
+    {
+        $equipement = Equipement::findOrFail($id);
+
+        $validated = $request->validate([
+            'statut_id' => [
+                'required',
+                'integer',
+                'exists:statuts,id',
+            ],
         ]);
-    }
 
-    public function createEquipement(Request $request){
+        $enLocation = Location::where(
+            'equipement_id',
+            $equipement->id
+        )
+            ->where('statut', 'en_cours')
+            ->exists();
 
-        try{
-            $validate = $request->validate([
-                'reference' => 'required|string|max:255',
-                'marque' => 'required|string|max:255',
-                'modele' => 'required|string|max:255',
-                'statut_id' => 'required|integer|exists:statuts,id',
-                'image' => 'required|image|mimes:jpeg,png,jpg,webp',
-            ]);
-
-            $image_path = $request->file('image')->store('equipements', 'public');
-            $validate['image'] = $image_path;
-
-            $equipement = Equipement::create($validate);
-            return back()->with('success','Equipement créer avec succès');
-        }
-        catch(\Throwable $e){
-            dd([
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line'=> $e->getLine(),
-            ]);
-        }
-    }
-
-    public function updateEquipement(Request $request, $id){
-        $equipement = Equipement::findOrFail($id);
-
-        try{
-            $validate = $request->validate([
-                'reference' => 'required|string|max:255',
-                'marque' => 'required|string|max:255',
-                'modele' => 'required|string|max:255',
-                'statut_id' => 'required|integer|exists:statuts,id',
-                'image' => 'required|image|mimes:jpeg,png,jpg,webp',
-            ]);
-
-            if ($request->hasFile('image')) {
-
-                //Supprimer l'ancienne image
-                if($equipement->image) {
-                    Storage::disk('public')->delete($equipement->image);
-                }
-
-                //Enregistrer la nouvelle image
-                $validate['image'] = $request
-                ->file('image')->store('equipements', 'public');
-            }
-
-            $equipement->update($validate);
-            return back()->with('success', 'Equipement modifié avec succès');
-        }
-        catch(\Throwable $e){
-            dd([
-                'message' => $e->getMessage(),
-                'file'=> $e->getFile(),
-                'line'=> $e->getLine(),
-            ]);
-        }
-    }
-
-    public function deleteEquipement($id){
-        $equipement = Equipement::findOrFail($id);
-
-        try{
-            // Supprimer l'image
-            if ($equipement->image) {
-                Storage::disk('public')->delete($equipement->image);
-            }
-
-            $equipement->delete();
-
+        if ($enLocation) {
             return back()->with(
-                'success',
-                'Équipement supprimé avec succès'
+                'error',
+                'Impossible de modifier le statut : cet équipement est actuellement en location.'
             );
-
-        } catch (\Throwable $e) {
-            dd([
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-            ]);
         }
+
+        $equipement->update([
+            'statut_id' => $validated['statut_id'],
+        ]);
+
+        return back()->with(
+            'success',
+            'Statut de l’équipement modifié avec succès.'
+        );
+    }
+
+    public function EquipementForm()
+    {
+        $statuts = Statut::all();
+
+        return inertia('equipements/CreateEquipement', [
+            'statuts' => $statuts,
+        ]);
+    }
+
+    public function createEquipement(Request $request)
+    {
+        $validated = $request->validate([
+            'reference' => 'required|string|max:255',
+            'marque' => 'required|string|max:255',
+            'modele' => 'required|string|max:255',
+            'statut_id' => 'required|integer|exists:statuts,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp',
+        ]);
+
+        $imagePath = $request
+            ->file('image')
+            ->store('equipements', 'public');
+
+        $validated['image'] = $imagePath;
+
+        Equipement::create($validated);
+
+        return back()->with(
+            'success',
+            'Équipement créé avec succès.'
+        );
+    }
+
+    public function updateEquipement(Request $request, $id)
+    {
+        $equipement = Equipement::findOrFail($id);
+
+        $validated = $request->validate([
+            'reference' => 'required|string|max:255',
+            'marque' => 'required|string|max:255',
+            'modele' => 'required|string|max:255',
+            'statut_id' => 'required|integer|exists:statuts,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp',
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Vérification de la location
+        |--------------------------------------------------------------------------
+        */
+
+        $enLocation = Location::where(
+            'equipement_id',
+            $equipement->id
+        )
+            ->where('statut', 'en_cours')
+            ->exists();
+
+        /*
+        | Si l'équipement est en location et que le statut demandé
+        | est différent de son statut actuel, on bloque.
+        */
+
+        if (
+            $enLocation &&
+            (int) $validated['statut_id'] !== (int) $equipement->statut_id
+        ) {
+            return back()->with(
+                'error',
+                'Impossible de modifier le statut : cet équipement est actuellement en location.'
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Image
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->hasFile('image')) {
+            if ($equipement->image) {
+                Storage::disk('public')->delete(
+                    $equipement->image
+                );
+            }
+
+            $validated['image'] = $request
+                ->file('image')
+                ->store('equipements', 'public');
+        }
+
+        $equipement->update($validated);
+
+        return back()->with(
+            'success',
+            'Équipement modifié avec succès.'
+        );
+    }
+
+    public function deleteEquipement($id)
+    {
+        $equipement = Equipement::findOrFail($id);
+
+        $enLocation = Location::where(
+            'equipement_id',
+            $equipement->id
+        )
+            ->where('statut', 'en_cours')
+            ->exists();
+
+        if ($enLocation) {
+            return back()->with(
+                'error',
+                'Impossible de supprimer cet équipement : il est actuellement en location.'
+            );
+        }
+
+        if ($equipement->image) {
+            Storage::disk('public')->delete(
+                $equipement->image
+            );
+        }
+
+        $equipement->delete();
+
+        return back()->with(
+            'success',
+            'Équipement supprimé avec succès.'
+        );
     }
 }

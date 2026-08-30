@@ -18,20 +18,21 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'nom' => 'Administrateur'
+            'nom' => 'Administrateur',
         ];
     }
 
     public function gestionnaire(): static
     {
         return $this->state(fn (array $attributes) => [
-            'nom' => 'Gestionnaire'
+            'nom' => 'Gestionnaire',
         ]);
     }
+
     public function operateur(): static
     {
         return $this->state(fn (array $attributes) => [
-            'nom' => 'Opérateur'
+            'nom' => 'Opérateur',
         ]);
     }
 }

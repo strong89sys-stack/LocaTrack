@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipement;
 use App\Models\Alerte;
-use Illuminate\Http\Request;
+use App\Models\Equipement;
+use App\Models\Location;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | ÉQUIPEMENTS
+        |--------------------------------------------------------------------------
+        */
+
         $equipements = Equipement::with([
             'statut',
             'appareil',
             'dernierePositionGps',
         ])
-        ->get([
-            'id',
-            'reference',
-            'marque',
-            'modele',
-            'statut_id',
-            'image',
-        ]);
+            ->get([
+                'id',
+                'reference',
+                'marque',
+                'modele',
+                'statut_id',
+                'image',
+            ]);
 
         $equipements = $equipements->map(function ($equipement) {
 
@@ -63,11 +70,53 @@ class DashboardController extends Controller
             ];
         });
 
-        $alertesActives = Alerte::where('resolue', false)->count();
+
+        /*
+        |--------------------------------------------------------------------------
+        | ACTIVITÉ DES LOCATIONS - 7 DERNIERS JOURS
+        |--------------------------------------------------------------------------
+        */
+
+        $locationsData = collect();
+
+        for ($i = 6; $i >= 0; $i--) {
+
+            $date = now()->subDays($i);
+
+            $nombreLocations = Location::whereDate(
+                'date_debut',
+                $date->toDateString()
+            )->count();
+
+            $locationsData->push([
+                'name' => $date->locale('fr')->isoFormat('ddd'),
+                'locations' => $nombreLocations,
+            ]);
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ALERTES ACTIVES
+        |--------------------------------------------------------------------------
+        */
+
+        $alertesActives = Alerte::where(
+            'resolue',
+            false
+        )->count();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | RÉPONSE INERTIA
+        |--------------------------------------------------------------------------
+        */
 
         return inertia('dashboard', [
             'equipements' => $equipements,
             'alertesActives' => $alertesActives,
+            'locationsData' => $locationsData,
         ]);
     }
 }

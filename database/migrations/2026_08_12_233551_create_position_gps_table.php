@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        schema::create('position_gps', function(Blueprint $table){
+        Schema::create('position_gps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('appareil_id')->constrained('appareils', 'id')->onDelete('cascade');
             $table->geometry('coordonnees', subtype: 'point', srid: 4326);

@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Location;
 use App\Models\Client;
 use App\Models\Equipement;
+use App\Models\Location;
 use App\Models\ZoneGeofence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -29,14 +29,14 @@ class LocationFactory extends Factory
         );
 
         return [
-            'client_id'=> Client::factory(),
-            'equipement_id'=> Equipement::factory(),
-            'zone_geofence_id'=>ZoneGeofence::factory(),
-            'date_debut'=>$dateDebut,
-            'date_fin'=>$dateFin,
-            'statut'=>fake()->randomElement([
+            'client_id' => Client::factory(),
+            'equipement_id' => Equipement::factory(),
+            'zone_geofence_id' => ZoneGeofence::factory(),
+            'date_debut' => $dateDebut,
+            'date_fin' => $dateFin,
+            'statut' => fake()->randomElement([
                 'en_cours',
-                'expiré'
+                'expiré',
             ]),
         ];
     }

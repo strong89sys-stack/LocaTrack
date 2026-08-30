@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\ZoneGeofence;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @extends Factory<ZoneGeofence>
@@ -19,12 +19,12 @@ class ZoneGeofenceFactory extends Factory
     public function definition(): array
     {
         return [
-            'nom'=>fake()->randomElement([
+            'nom' => fake()->randomElement([
                 'Anyama',
                 'Yopougon',
                 'Plateau',
-                "Koumassi",
-                "Abobo"
+                'Koumassi',
+                'Abobo',
             ]),
             'centre' => DB::raw(
                 sprintf(
@@ -33,8 +33,8 @@ class ZoneGeofenceFactory extends Factory
                     fake()->latitude(5.25, 5.50)
                 )
             ),
-            'rayon'=>fake()->numberBetween(100,5000),
-            'tolerance'=>fake()->numberBetween(10,500),
+            'rayon' => fake()->numberBetween(100, 5000),
+            'tolerance' => fake()->numberBetween(10, 500),
         ];
     }
 }

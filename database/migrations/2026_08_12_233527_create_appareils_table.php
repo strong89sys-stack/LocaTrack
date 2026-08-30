@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create("appareils", function (Blueprint $table) {
+        Schema::create('appareils', function (Blueprint $table) {
             $table->id();
-            $table->string("imei")->unique();
-            $table->string("numero_sim");
-            $table->unsignedTinyInteger("niveau_batterie");
-            $table->string("statut");
-            $table->foreignId("equipement_id")->unique()->constrained('equipements', 'id')->onDelete('cascade');
+            $table->string('imei')->unique();
+            $table->string('numero_sim');
+            $table->unsignedTinyInteger('niveau_batterie');
+            $table->string('statut');
+            $table->foreignId('equipement_id')->unique()->constrained('equipements', 'id')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists("appareils");
+        Schema::dropIfExists('appareils');
     }
 };

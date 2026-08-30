@@ -4,6 +4,7 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { GrAlert } from "react-icons/gr";
 import { MdPrecisionManufacturing } from "react-icons/md";
 import { RiWifiOffLine } from "react-icons/ri";
+import { useCurrentTime } from "@/hooks/useCurrentTime";
 
 interface Position {
     latitude: number
@@ -44,16 +45,30 @@ interface CardProps{
 
 export default function InfoCard({equipements, alertesActives}: CardProps){
 
-    const disponible = equipements.filter(item => item.statut.libelle === 'Disponible')
-    const en_location = equipements.filter(item => item.statut.libelle === 'En Location')
-    const hors_service = equipements.filter(item => item.statut.libelle === 'Hors Service')
+    const now = useCurrentTime()
+
+    const disponible = equipements.filter(
+        item => item.statut.libelle === 'Disponible'
+    )
+
+    const en_location = equipements.filter(
+        item => item.statut.libelle === 'En Location'
+    )
+
     const offline = equipements.filter(item => {
-        if(!item.position?.date_heure){
+
+        if (!item.position?.date_heure) {
             return true
         }
 
-        const lastPosition = new Date(item.position?.date_heure).getTime()
-        const now = Date.now()
+        if (now === null) {
+            return false
+        }
+
+        const lastPosition = new Date(
+            item.position.date_heure
+        ).getTime()
+
         const elapsed_time = 5 * 60 * 1000
 
         return now - lastPosition > elapsed_time
@@ -91,7 +106,7 @@ export default function InfoCard({equipements, alertesActives}: CardProps){
 
     return(
         <>
-        <div className="grid grid-cols-5 col-span-12 w-full gap-6">
+        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
 
             {cards.map((item, index) => {
                 const Icon = item.icon

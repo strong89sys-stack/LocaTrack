@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Alerte;
 use App\Models\Equipement;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AlerteSeeder extends Seeder

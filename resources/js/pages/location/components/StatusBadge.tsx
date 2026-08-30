@@ -1,6 +1,6 @@
 
 
-function StatusBadge({
+export default function StatusBadge({
     status,
 }: {
     status: Rental["status"];

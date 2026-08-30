@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Statut extends Model
 {
     protected $fillable = ['libelle'];
+
     protected $guarded = ['id'];
-    
-    public function equipements(){
+
+    public function equipements()
+    {
         return $this->hasMany(Equipement::class);
     }
 }

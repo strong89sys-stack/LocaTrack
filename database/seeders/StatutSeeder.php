@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Statut;
+use Illuminate\Database\Seeder;
 
 class StatutSeeder extends Seeder
 {
@@ -14,16 +13,16 @@ class StatutSeeder extends Seeder
     public function run(): void
     {
         Statut::create([
-            "libelle"=> "Disponible",
+            'libelle' => 'Disponible',
         ]);
         Statut::create([
-            "libelle"=> "En Location",
+            'libelle' => 'En Location',
         ]);
         Statut::create([
-            "libelle"=> "En Maintenance",
+            'libelle' => 'En Maintenance',
         ]);
         Statut::create([
-            "libelle"=> "Hors Service",
+            'libelle' => 'Hors Service',
         ]);
     }
 }

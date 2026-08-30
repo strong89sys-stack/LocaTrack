@@ -34,33 +34,33 @@ export default function Create() {
         });
     };
 
+    const handleBack = () =>{
+        router.visit('/locations');
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-[#09090b]">
             <div className="mx-auto w-full max-w-2xl">
 
                 {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        Ajouter un client
-                    </h1>
+                <div className="flex items-center justify-between">
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            Ajouter un client
+                        </h1>
 
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                        Enregistrez un nouveau client dans votre plateforme.
-                    </p>
+                        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                            Enregistrez un nouveau client dans votre plateforme.
+                        </p>
+                    </div>
+
+                    <button onClick={handleBack} className="font-bold hover:underline transition-all">Retour</button>
                 </div>
 
                 {/* Card */}
                 <form
                     onSubmit={handleSubmit}
-                    className="
-                        overflow-hidden
-                        rounded-2xl
-                        border border-gray-200
-                        bg-white
-                        shadow-sm
-                        dark:border-zinc-800
-                        dark:bg-zinc-950
-                    "
+                    className=" overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950"
                 >
                     <div className="space-y-7 p-8">
 

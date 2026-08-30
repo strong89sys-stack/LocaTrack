@@ -18,16 +18,16 @@ class EquipementFactory extends Factory
     public function definition(): array
     {
         return [
-            'reference' =>fake()->uuid(),
-            'marque' =>fake()->randomElement([
+            'reference' => fake()->uuid(),
+            'marque' => fake()->randomElement([
                 'Caterpillar',
                 'Komatsu',
                 'JCB',
                 'Volvo',
                 'Hitachi',
             ]),
-            'modele' =>fake()->bothify('MODEL-###??'),
-            'statut_id'=>fake()->numberBetween(1, 4),
+            'modele' => fake()->bothify('MODEL-###??'),
+            'statut_id' => fake()->numberBetween(1, 4),
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\PositionGps;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @extends Factory<PositionGps>
@@ -19,7 +19,7 @@ class PositionGpsFactory extends Factory
     public function definition(): array
     {
         return [
-            'appareil_id'=>fake()->numberBetween(1,50),
+            'appareil_id' => fake()->numberBetween(1, 50),
             'coordonnees' => DB::raw(
                 sprintf(
                     "ST_GeomFromText('POINT(%s %s)', 4326)",
@@ -27,8 +27,8 @@ class PositionGpsFactory extends Factory
                     fake()->latitude(5.25, 5.50)
                 )
             ),
-            'vitesse'=>fake()->randomFloat(2,0,120),
-            'date_heure'=>fake()->dateTimeBetween('-7 days', 'now'),
+            'vitesse' => fake()->randomFloat(2, 0, 120),
+            'date_heure' => fake()->dateTimeBetween('-7 days', 'now'),
         ];
     }
 }

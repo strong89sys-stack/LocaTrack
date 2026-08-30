@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { router } from "@inertiajs/react";
 import { FiMoreVertical, FiMapPin } from "react-icons/fi";
 import { IoMdPerson } from "react-icons/io";
 import { MdOutlineCalendarMonth } from "react-icons/md";
@@ -13,46 +14,23 @@ interface RentalCardProps {
     location: Location;
 }
 
-export default function RentalCard({
-    location,
-}: RentalCardProps) {
+export default function RentalCard({ location }: RentalCardProps) {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [showExtend, setShowExtend] = useState(false);
+    const [newEndDate, setNewEndDate] = useState("");
+    const [processing, setProcessing] = useState(false);
 
     const isOverdue = location.statut === "expiré";
-
-    /*
-    |--------------------------------------------------------------------------
-    | Dates
-    |--------------------------------------------------------------------------
-    */
 
     const startDate = new Date(location.date_debut);
     const endDate = new Date(location.date_fin);
     const today = new Date();
 
-    /*
-    |--------------------------------------------------------------------------
-    | Durée totale
-    |--------------------------------------------------------------------------
-    */
-
     const totalDuration =
         endDate.getTime() - startDate.getTime();
 
-    /*
-    |--------------------------------------------------------------------------
-    | Temps écoulé
-    |--------------------------------------------------------------------------
-    */
-
     const elapsedDuration =
         today.getTime() - startDate.getTime();
-
-    /*
-    |--------------------------------------------------------------------------
-    | Progression
-    |--------------------------------------------------------------------------
-    */
 
     let progress = 0;
 
@@ -66,12 +44,6 @@ export default function RentalCard({
         100
     );
 
-    /*
-    |--------------------------------------------------------------------------
-    | Durée en jours
-    |--------------------------------------------------------------------------
-    */
-
     const duration = Math.max(
         Math.ceil(
             totalDuration /
@@ -80,14 +52,14 @@ export default function RentalCard({
         0
     );
 
-    /*
-    |--------------------------------------------------------------------------
-    | Formatage des dates
-    |--------------------------------------------------------------------------
-    */
-
     const formatDate = (date: string) => {
-        return new Date(date).toLocaleDateString(
+        const parsedDate = new Date(date);
+
+        if (isNaN(parsedDate.getTime())) {
+            return "Date invalide";
+        }
+
+        return parsedDate.toLocaleDateString(
             "fr-FR",
             {
                 day: "2-digit",
@@ -97,28 +69,22 @@ export default function RentalCard({
         );
     };
 
-    /*
-    |--------------------------------------------------------------------------
-    | Informations
-    |--------------------------------------------------------------------------
-    */
-
     const clientName =
         `${location.client.nom} ${location.client.prenoms}`;
 
     const equipmentName =
         `${location.equipement.marque} ${location.equipement.modele}`;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Expirer la location
-    |--------------------------------------------------------------------------
-    */
+    const imageUrl = location.equipement.image
+        ? location.equipement.image.startsWith("/storage/")
+            ? location.equipement.image
+            : `/storage/${location.equipement.image}`
+        : "/images/equipement-placeholder.jpg";
 
     const handleExpire = () => {
         setMenuOpen(false);
 
-        if (location.statut === "expiré") {
+        if (isOverdue) {
             return;
         }
 
@@ -131,43 +97,60 @@ export default function RentalCard({
         );
     };
 
+    const handleShowExtend = () => {
+        setMenuOpen(false);
+        setShowExtend(true);
+        setNewEndDate("");
+    };
+
+    const handleExtend = () => {
+        if (!newEndDate || processing) {
+            return;
+        }
+
+        if (
+            newEndDate <=
+            location.date_fin.substring(0, 10)
+        ) {
+            return;
+        }
+
+        setProcessing(true);
+
+        router.put(
+            `/locations/${location.id}/prolonger`,
+            {
+                date_fin: newEndDate,
+            },
+            {
+                preserveScroll: true,
+
+                onFinish: () => {
+                    setProcessing(false);
+                },
+
+                onSuccess: () => {
+                    setShowExtend(false);
+                    setNewEndDate("");
+                },
+            }
+        );
+    };
+
+    const minimumEndDate =
+        location.date_fin.substring(0, 10);
+
     return (
-        <div
-            className="
-                group
-                overflow-hidden
-                rounded-2xl
-                border
-                border-gray-200
-                bg-white
-                shadow-sm
-                transition-all
-                duration-300
-                hover:-translate-y-1
-                hover:shadow-xl
-            "
-        >
+        <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+
             {/* IMAGE */}
 
-            <div
-                className="
-                    relative
-                    h-42.5
-                    overflow-hidden
-                    bg-gray-100
-                "
-            >
+            <div className="relative h-[170px] overflow-hidden bg-gray-100">
+
                 <img
-                    src={location.equipement.image}
+                    src={imageUrl}
                     alt={equipmentName}
-                    className="
-                        h-full
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-500
-                        group-hover:scale-105
-                    "
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
                 <div className="absolute left-4 top-4">
@@ -175,7 +158,9 @@ export default function RentalCard({
                         status={location.statut}
                     />
                 </div>
+
             </div>
+
 
             {/* CONTENU */}
 
@@ -183,41 +168,26 @@ export default function RentalCard({
 
                 {/* TITRE */}
 
-                <div
-                    className="
-                        flex
-                        items-start
-                        justify-between
-                        gap-3
-                    "
-                >
+                <div className="flex items-start justify-between gap-3">
+
                     <div className="min-w-0">
 
                         <h3
-                            className="
-                                truncate
-                                text-lg
-                                font-bold
-                                text-[#172033]
-                            "
+                            className="truncate text-lg font-bold text-[#172033]"
                             title={equipmentName}
                         >
                             {equipmentName}
                         </h3>
 
                         <p
-                            className="
-                                mt-1
-                                truncate
-                                text-sm
-                                text-gray-500
-                            "
+                            className="mt-1 truncate text-sm text-gray-500"
                             title={location.equipement.reference}
                         >
                             Réf. {location.equipement.reference}
                         </p>
 
                     </div>
+
 
                     {/* MENU */}
 
@@ -226,68 +196,40 @@ export default function RentalCard({
                         <button
                             type="button"
                             onClick={() =>
-                                setMenuOpen(!menuOpen)
+                                setMenuOpen((value) => !value)
                             }
-                            className="
-                                rounded-full
-                                p-2
-                                text-gray-400
-                                transition
-                                hover:bg-gray-100
-                                hover:text-gray-800
-                            "
+                            className="rounded-full p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-800"
                         >
                             <FiMoreVertical size={20} />
                         </button>
 
+
                         {menuOpen && (
-                            <div
-                                className="
-                                    absolute
-                                    right-0
-                                    top-10
-                                    z-50
-                                    w-48
-                                    overflow-hidden
-                                    rounded-xl
-                                    border
-                                    border-gray-200
-                                    bg-white
-                                    py-1
-                                    shadow-lg
-                                "
-                            >
+                            <div className="absolute right-0 top-10 z-50 w-52 overflow-hidden rounded-xl border border-gray-200 bg-white py-1 shadow-lg">
 
                                 {!isOverdue && (
-                                    <button
-                                        type="button"
-                                        onClick={handleExpire}
-                                        className="
-                                            w-full
-                                            px-4
-                                            py-2.5
-                                            text-left
-                                            text-sm
-                                            font-medium
-                                            text-red-600
-                                            transition
-                                            hover:bg-red-50
-                                        "
-                                    >
-                                        Marquer comme expirée
-                                    </button>
+                                    <>
+                                        <button
+                                            type="button"
+                                            onClick={handleShowExtend}
+                                            className="w-full px-4 py-2.5 text-left text-sm font-medium text-[#00647c] transition hover:bg-[#00647c]/5"
+                                        >
+                                            Prolonger la location
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={handleExpire}
+                                            className="w-full px-4 py-2.5 text-left text-sm font-medium text-red-600 transition hover:bg-red-50"
+                                        >
+                                            Marquer comme terminée
+                                        </button>
+                                    </>
                                 )}
 
                                 {isOverdue && (
-                                    <div
-                                        className="
-                                            px-4
-                                            py-2.5
-                                            text-sm
-                                            text-gray-400
-                                        "
-                                    >
-                                        Location déjà expirée
+                                    <div className="px-4 py-2.5 text-sm text-gray-400">
+                                        Location déjà terminée
                                     </div>
                                 )}
 
@@ -295,30 +237,95 @@ export default function RentalCard({
                         )}
 
                     </div>
+
                 </div>
+
+
+                {/* FORMULAIRE PROLONGATION */}
+
+                {showExtend && !isOverdue && (
+                    <div className="mt-5 rounded-2xl border border-[#00647c]/10 bg-[#00647c]/5 p-4">
+
+                        <p className="text-sm font-bold text-[#172033]">
+                            Prolonger la location
+                        </p>
+
+                        <p className="mt-1 text-xs leading-relaxed text-gray-500">
+                            La nouvelle date doit être postérieure à la date de fin actuelle.
+                        </p>
+
+                        <div className="mt-4">
+
+                            <label
+                                htmlFor={`date-fin-${location.id}`}
+                                className="mb-2 block text-xs font-semibold text-gray-600"
+                            >
+                                Nouvelle date de fin
+                            </label>
+
+                            <input
+                                id={`date-fin-${location.id}`}
+                                type="date"
+                                value={newEndDate}
+                                min={minimumEndDate}
+                                onChange={(event) =>
+                                    setNewEndDate(
+                                        event.target.value
+                                    )
+                                }
+                                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none transition focus:border-[#00647c] focus:ring-2 focus:ring-[#00647c]/10"
+                            />
+
+                        </div>
+
+
+                        <div className="mt-4 flex items-center justify-end gap-2">
+
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setShowExtend(false);
+                                    setNewEndDate("");
+                                }}
+                                disabled={processing}
+                                className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                Annuler
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={handleExtend}
+                                disabled={
+                                    !newEndDate ||
+                                    processing ||
+                                    newEndDate <= minimumEndDate
+                                }
+                                className="rounded-xl bg-[#00647c] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#00566a] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                                {processing
+                                    ? "Enregistrement..."
+                                    : "Prolonger"}
+                            </button>
+
+                        </div>
+
+                    </div>
+                )}
+
 
                 {/* INFORMATIONS */}
 
-                <div
-                    className="
-                        mt-5
-                        space-y-3
-                    "
-                >
-
-                    {/* Client */}
+                <div className="mt-5 space-y-3">
 
                     <RentalInfoRow
                         icon={<IoMdPerson />}
                         text={clientName}
                     />
 
-                    {/* Dates */}
 
                     <RentalInfoRow
-                        icon={
-                            <MdOutlineCalendarMonth />
-                        }
+                        icon={<MdOutlineCalendarMonth />}
                         text={
                             isOverdue
                                 ? `Terminée le ${formatDate(
@@ -333,16 +340,17 @@ export default function RentalCard({
                         danger={isOverdue}
                     />
 
-                    {/* Zone */}
 
                     <RentalInfoRow
                         icon={<FiMapPin />}
                         text={
-                            location.zone_geofence.nom
+                            location.zone_geofence?.nom ??
+                            "Aucune zone"
                         }
                     />
 
                 </div>
+
 
                 {/* PROGRESSION */}
 
@@ -356,6 +364,7 @@ export default function RentalCard({
                 </div>
 
             </div>
+
         </div>
     );
 }

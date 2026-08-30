@@ -18,12 +18,12 @@ class StatutFactory extends Factory
     public function definition(): array
     {
         return [
-            'libelle'=>fake()->randomElement([
+            'libelle' => fake()->randomElement([
                 'disponible',
                 'en_location',
                 'maintenance',
                 'hors_service',
-            ])
+            ]),
         ];
     }
 }

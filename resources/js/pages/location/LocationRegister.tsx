@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { LoaderCircle } from "lucide-react";
 
 interface Client {
@@ -63,20 +63,28 @@ export default function LocationRegister({
         post("/locations/create");
     };
 
+    const handleBack = () =>{
+        router.visit('/locations');
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-[#09090b]">
             <div className="mx-auto w-full max-w-2xl">
 
                 {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        Créer une location
-                    </h1>
+                <div className="flex items-center justify-between">
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            Créer une location
+                        </h1>
 
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                        Enregistrez un nouveau contrat de location dans votre
-                        plateforme.
-                    </p>
+                        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                            Enregistrez un nouveau contrat de location dans votre
+                            plateforme.
+                        </p>
+                    </div>
+                    
+                    <button onClick={handleBack} className="font-bold hover:underline transition-all">Retour</button>
                 </div>
 
                 {/* Card */}
