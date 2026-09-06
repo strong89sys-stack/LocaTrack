@@ -1,3 +1,11 @@
+# --- Étape 1 : Build des assets Front-end (Vite) ---
+FROM node:20-alpine AS frontend
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
 FROM php:8.4-fpm-alpine
 
 WORKDIR /var/www/html
@@ -29,6 +37,12 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copie de tout le code source
 COPY . .
+
+# Copier les fichiers du projet
+COPY . /var/www/html
+
+# *** LE PLUS IMPORTANT : Récupérer le dossier build généré par l'étape Node.js ***
+COPY --from=frontend /app/public/build /var/www/html/public/build
 
 # Installation de TOUTES les dépendances Composer (y compris dev pour Faker)
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
