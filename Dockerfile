@@ -1,20 +1,3 @@
-# ============================================================
-# Étape 1 : Build des assets Frontend (React / Vite)
-# ============================================================
-# FROM node:24-alpine AS frontend-builder
-
-# WORKDIR /app
-
-# COPY package.json package-lock.json ./
-# RUN npm install
-
-# COPY . .
-# RUN npm run build
-
-
-# ============================================================
-# Étape 2 : Application PHP / Laravel finale
-# ============================================================
 FROM php:8.4-fpm-alpine
 
 WORKDIR /var/www/html
@@ -39,24 +22,15 @@ RUN docker-php-ext-install \
     pcntl \
     opcache
 
-# Copie de Composer depuis l'image officielle
+# Copie de Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copie des fichiers de dépendances PHP
+# Copie et installation des dépendances PHP
 COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-# Installation des dépendances Composer (production)
-RUN composer install \
-    --no-dev \
-    --no-interaction \
-    --prefer-dist \
-    --optimize-autoloader
-
-# Copie du reste du code source de l'application
+# Copie du reste du code (qui contient déjà le dossier public/build fait en local)
 COPY . .
-
-# Récupération des assets compilés depuis l'étape 1 (Vite/React)
-COPY --from=frontend-builder /app/public/build ./public/build
 
 # Création des dossiers de stockage Laravel nécessaires
 RUN mkdir -p \
@@ -67,13 +41,8 @@ RUN mkdir -p \
     bootstrap/cache
 
 # Configuration des permissions
-RUN chown -R www-data:www-data \
-    storage \
-    bootstrap/cache
-
-RUN chmod -R 775 \
-    storage \
-    bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 9000
 
