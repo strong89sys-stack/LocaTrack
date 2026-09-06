@@ -12,6 +12,6 @@ class ZoneGeofenceSeeder extends Seeder
      */
     public function run(): void
     {
-        ZoneGeofence::factory()->count(5)->firstOrCreate();
+        ZoneGeofence::factory()->count(5)->create();
     }
 }

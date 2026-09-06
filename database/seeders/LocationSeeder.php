@@ -20,7 +20,7 @@ class LocationSeeder extends Seeder
         $zones = ZoneGeofence::all();
 
         for ($i = 0; $i < 50; $i++) {
-            Location::factory()->firstOrCreate([
+            Location::factory()->create([
                 'client_id' => $clients->random()->id,
                 'equipement_id' => $equipements->random()->id,
                 'zone_geofence_id' => $zones->random()->id,

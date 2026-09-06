@@ -18,7 +18,7 @@ class PositionGpsSeeder extends Seeder
         foreach ($appareils as $appareil) {
             PositionGps::factory()
                 ->count(20)
-                ->firstOrCreate([
+                ->create([
                     'appareil_id' => $appareil->id,
                 ]);
         }

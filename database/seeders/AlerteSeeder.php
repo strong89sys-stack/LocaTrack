@@ -18,7 +18,7 @@ class AlerteSeeder extends Seeder
         foreach ($equipements as $equipement) {
             Alerte::factory()
                 ->count(fake()->numberBetween(1, 5))
-                ->firstOrCreate([
+                ->create([
                     'equipement_id' => $equipement->id,
                 ]);
         }
