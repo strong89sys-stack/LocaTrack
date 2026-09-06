@@ -1,43 +1,25 @@
-# FROM node:18.17.0-alpine
-# WORKDIR /resources/js
-# COPY package*.json ./
-# RUN npm install
-# COPY . .
-# RUN npm run build
-# EXPOSE 3000
-# CMD [ "npm", "start" ]
+# ============================================================
+# Étape 1 : Build des assets Frontend (React / Vite)
+# ============================================================
+FROM node:20-alpine AS frontend-builder
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
 
 
 # ============================================================
-# Laravel + React + Vite + Reverb
+# Étape 2 : Application PHP / Laravel finale
 # ============================================================
-
-# Instead of 8.3
 FROM php:8.4-fpm-alpine
-
-FROM node:20-alpine
-# ou FROM node:20
 
 WORKDIR /var/www/html
 
-# ============================================================
-# Dépendances système
-# ============================================================
-
-# RUN apk add --no-cache \
-#     bash \
-#     curl \
-#     git \
-#     icu-dev \
-#     libzip-dev \
-#     oniguruma-dev \
-#     mysql-client \
-#     linux-headers \
-#     nodejs \
-#     npm \
-#     $PHPIZE_DEPS
-
-# Update apk index first (often fixes stale repo issues)
+# Installation des dépendances système et outils PHP
 RUN apk update && apk add --no-cache \
     bash \
     curl \
@@ -46,25 +28,9 @@ RUN apk update && apk add --no-cache \
     libzip-dev \
     oniguruma-dev \
     mysql-client \
-    linux-headers \
-    nodejs \
-    npm
+    linux-headers
 
-# If packages still fail, verify they exist:
-# RUN apk search icu-dev
-
-# Install PHP build dependencies properly
-RUN apk add --no-cache --virtual .phpize_deps \
-    $PHPIZE_DEPS \
-    icu-dev \
-    libzip-dev \
-    oniguruma-dev
-
-
-# ============================================================
-# Extensions PHP
-# ============================================================
-
+# Installation des extensions PHP
 RUN docker-php-ext-install \
     pdo_mysql \
     mbstring \
@@ -73,48 +39,26 @@ RUN docker-php-ext-install \
     pcntl \
     opcache
 
-# ============================================================
-# Composer
-# ============================================================
-
+# Copie de Composer depuis l'image officielle
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# ============================================================
-# Dépendances Laravel
-# ============================================================
-
+# Copie des fichiers de dépendances PHP
 COPY composer.json composer.lock ./
 
+# Installation des dépendances Composer (production)
 RUN composer install \
     --no-dev \
     --no-interaction \
     --prefer-dist \
     --optimize-autoloader
 
-# ============================================================
-# Application Laravel
-# ============================================================
-
+# Copie du reste du code source de l'application
 COPY . .
 
-# ============================================================
-# Dépendances frontend
-# ============================================================
+# Récupération des assets compilés depuis l'étape 1 (Vite/React)
+COPY --from=frontend-builder /app/public/build ./public/build
 
-COPY package.json package-lock.json ./
-
-RUN npm ci
-
-# ============================================================
-# Build React / Vite
-# ============================================================
-
-RUN npm run build
-
-# ============================================================
-# Répertoires Laravel
-# ============================================================
-
+# Création des dossiers de stockage Laravel nécessaires
 RUN mkdir -p \
     storage/framework/cache \
     storage/framework/sessions \
@@ -122,10 +66,7 @@ RUN mkdir -p \
     storage/logs \
     bootstrap/cache
 
-# ============================================================
-# Permissions
-# ============================================================
-
+# Configuration des permissions
 RUN chown -R www-data:www-data \
     storage \
     bootstrap/cache
@@ -133,16 +74,6 @@ RUN chown -R www-data:www-data \
 RUN chmod -R 775 \
     storage \
     bootstrap/cache
-
-# ============================================================
-# Nettoyage npm
-# ============================================================
-
-RUN npm cache clean --force
-
-# ============================================================
-# PHP-FPM
-# ============================================================
 
 EXPOSE 9000
 
