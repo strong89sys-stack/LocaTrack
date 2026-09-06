@@ -12,16 +12,16 @@ class StatutSeeder extends Seeder
      */
     public function run(): void
     {
-        Statut::create([
+        Statut::firstOrCreate([
             'libelle' => 'Disponible',
         ]);
-        Statut::create([
+        Statut::firstOrCreate([
             'libelle' => 'En Location',
         ]);
-        Statut::create([
+        Statut::firstOrCreate([
             'libelle' => 'En Maintenance',
         ]);
-        Statut::create([
+        Statut::firstOrCreate([
             'libelle' => 'Hors Service',
         ]);
     }

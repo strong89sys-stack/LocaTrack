@@ -14,7 +14,7 @@ class AppareilSeeder extends Seeder
     public function run(): void
     {
         Equipement::all()->each(function (Equipement $equipement) {
-            Appareil::factory()->create([
+            Appareil::factory()->firstOrCreate([
                 'equipement_id' => $equipement->id,
             ]);
         });
