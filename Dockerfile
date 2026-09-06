@@ -51,7 +51,8 @@ EXPOSE 10000
 # puis exécution séquentielle des commandes
 CMD export CACHE_STORE=file && \
     php artisan config:clear && \
-    php artisan cache:clear && \
+    php artisan route:clear && \
     php artisan view:clear && \
     php artisan migrate --force && \
+    php artisan db:seed --force && \
     php artisan serve --host=0.0.0.0 --port=10000
