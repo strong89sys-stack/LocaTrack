@@ -1,11 +1,20 @@
-# --- Étape 1 : Build des assets Front-end (Vite) ---
-FROM node:20-alpine AS frontend
+# --- Étape 1 : Build des assets Front-end (Vite) avec PHP pour Wayfinder ---
+FROM node:24-alpine AS frontend
+
+# Installer PHP dans l'image Node pour que Wayfinder puisse lancer ses commandes artisan
+RUN apk add --no-cache php php-cli php-phar php-openssl php-mbstring php-json php-iconv
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+
+# Vérification de la version de Node
+RUN node -v
+
 RUN npm run build
 
+# --- Étape 2 : Application PHP / Laravel ---
 FROM php:8.4-fpm-alpine
 
 WORKDIR /var/www/html
@@ -36,15 +45,12 @@ RUN docker-php-ext-install \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copie de tout le code source
-COPY . .
-
-# Copier les fichiers du projet
 COPY . /var/www/html
 
-# *** LE PLUS IMPORTANT : Récupérer le dossier build généré par l'étape Node.js ***
+# Récupérer le dossier build généré par l'étape Node.js
 COPY --from=frontend /app/public/build /var/www/html/public/build
 
-# Installation de TOUTES les dépendances Composer (y compris dev pour Faker)
+# Installation de TOUTES les dépendances Composer (nécessaire aussi pour que php artisan fonctionne avec les packages)
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 # Création des dossiers de stockage Laravel nécessaires
@@ -68,5 +74,4 @@ CMD export CACHE_STORE=file && \
     php artisan route:clear && \
     php artisan view:clear && \
     php artisan migrate --force && \
-    # php artisan db:seed --force && \
     php artisan serve --host=0.0.0.0 --port=10000
