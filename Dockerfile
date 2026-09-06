@@ -2,7 +2,7 @@ FROM php:8.4-fpm-alpine
 
 WORKDIR /var/www/html
 
-# Installation des dépendances système et outils PHP
+# Installation des dépendances système, outils PHP ET bibliothèques PostgreSQL
 RUN apk update && apk add --no-cache \
     bash \
     curl \
@@ -10,10 +10,11 @@ RUN apk update && apk add --no-cache \
     icu-dev \
     libzip-dev \
     oniguruma-dev \
+    postgresql-dev \
     mysql-client \
     linux-headers
 
-# Installation des extensions PHP
+# Installation des extensions PHP (maintenant avec le support PostgreSQL)
 RUN docker-php-ext-install \
     pdo_pgsql \
     pgsql \
@@ -26,10 +27,10 @@ RUN docker-php-ext-install \
 # Copie de Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# 1. Copie d'abord TOUT le code source (ce qui inclut artisan, composer.json et composer.lock)
+# Copie de tout le code source
 COPY . .
 
-# 2. Ensuite seulement, on lance composer install (ainsi 'artisan' est déjà présent)
+# Installation des dépendances PHP via Composer
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Création des dossiers de stockage Laravel nécessaires
@@ -46,6 +47,7 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
 
 EXPOSE 10000
 
-# On lance le serveur artisan intégré en lui disant d'écouter sur 0.0.0.0 et d'utiliser le port de Render
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
-
+CMD php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan view:clear && \
+    php artisan serve --host=0.0.0.0 --port=10000
