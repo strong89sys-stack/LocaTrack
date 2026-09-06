@@ -14,7 +14,7 @@ RUN apk update && apk add --no-cache \
     mysql-client \
     linux-headers
 
-# Installation des extensions PHP (maintenant avec le support PostgreSQL)
+# Installation des extensions PHP
 RUN docker-php-ext-install \
     pdo_pgsql \
     pgsql \
@@ -30,8 +30,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Copie de tout le code source
 COPY . .
 
-# Installation des dépendances PHP via Composer
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+# Installation de TOUTES les dépendances Composer (y compris dev pour Faker)
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 # Création des dossiers de stockage Laravel nécessaires
 RUN mkdir -p \
