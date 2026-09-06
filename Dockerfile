@@ -1,36 +1,8 @@
-# --- Étape 1 : Build des assets Front-end (Vite) avec PHP & Composer pour Wayfinder ---
-FROM node:24-alpine AS frontend
-
-RUN apk add --no-cache \
-    php \
-    php-cli \
-    php-phar \
-    php-openssl \
-    php-mbstring \
-    php-json \
-    php-iconv \
-    php-tokenizer \
-    php-xml \
-    php-ctype \
-    composer
-
-WORKDIR /app
-
-COPY composer.json composer.lock package*.json ./
-
-RUN composer install --no-interaction --prefer-dist --no-progress --optimize-autoloader
-RUN npm install
-
-COPY . .
-
-RUN npm run build
-
-
-# --- Étape 2 : Application PHP / Laravel ---
 FROM php:8.4-fpm-alpine
 
 WORKDIR /var/www/html
 
+# Installation des dépendances système, outils PHP ET bibliothèques PostgreSQL
 RUN apk update && apk add --no-cache \
     bash \
     curl \
@@ -42,6 +14,7 @@ RUN apk update && apk add --no-cache \
     mysql-client \
     linux-headers
 
+# Installation des extensions PHP
 RUN docker-php-ext-install \
     pdo_pgsql \
     pgsql \
@@ -51,15 +24,16 @@ RUN docker-php-ext-install \
     pcntl \
     opcache
 
+# Copie de Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-COPY . /var/www/html
+# Copie de tout le code source
+COPY . .
 
-# Récupération propre du dossier généré à l'étape 1
-COPY --from=frontend /app/public/build /var/www/html/public/build
-
+# Installation de TOUTES les dépendances Composer (y compris dev pour Faker)
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
+# Création des dossiers de stockage Laravel nécessaires
 RUN mkdir -p \
     storage/framework/cache \
     storage/framework/sessions \
@@ -67,14 +41,18 @@ RUN mkdir -p \
     storage/logs \
     bootstrap/cache
 
+# Configuration des permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 10000
 
+# Export de la variable d'environnement pour toute la session du conteneur, 
+# puis exécution séquentielle des commandes
 CMD export CACHE_STORE=file && \
     php artisan config:clear && \
     php artisan route:clear && \
     php artisan view:clear && \
     php artisan migrate --force && \
+    # php artisan db:seed --force && \
     php artisan serve --host=0.0.0.0 --port=10000
