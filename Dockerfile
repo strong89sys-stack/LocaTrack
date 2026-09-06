@@ -47,7 +47,10 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
 
 EXPOSE 10000
 
-CMD php artisan config:clear && \
+# Export de la variable d'environnement pour toute la session du conteneur, 
+# puis exécution séquentielle des commandes
+CMD export CACHE_STORE=file && \
+    php artisan config:clear && \
     php artisan cache:clear && \
     php artisan view:clear && \
     php artisan migrate --force && \
