@@ -1,15 +1,15 @@
 # ============================================================
 # Étape 1 : Build des assets Frontend (React / Vite)
 # ============================================================
-FROM node:24-alpine AS frontend-builder
+# FROM node:24-alpine AS frontend-builder
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install
+# COPY package.json package-lock.json ./
+# RUN npm install
 
-COPY . .
-RUN npm run build
+# COPY . .
+# RUN npm run build
 
 
 # ============================================================
