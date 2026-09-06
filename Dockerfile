@@ -43,6 +43,8 @@ RUN mkdir -p \
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-EXPOSE 9000
+EXPOSE 10000
 
-CMD ["php-fpm"]
+# On lance le serveur artisan intégré en lui disant d'écouter sur 0.0.0.0 et d'utiliser le port de Render
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
+
