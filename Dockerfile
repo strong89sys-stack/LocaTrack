@@ -1,18 +1,3 @@
-# --- Étape 1 : Build des assets Front-end (Vite) avec PHP pour Wayfinder ---
-FROM node:24-alpine AS frontend
-
-# Installer PHP dans l'image Node pour que Wayfinder puisse lancer ses commandes artisan
-RUN apk add --no-cache php php-cli php-phar php-openssl php-mbstring php-json php-iconv
-
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-
-# Vérification de la version de Node
-RUN node -v
-
-RUN npm run build
 
 # --- Étape 2 : Application PHP / Laravel ---
 FROM php:8.4-fpm-alpine
