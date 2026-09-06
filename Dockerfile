@@ -15,7 +15,8 @@ RUN apk update && apk add --no-cache \
 
 # Installation des extensions PHP
 RUN docker-php-ext-install \
-    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
     mbstring \
     bcmath \
     intl \
