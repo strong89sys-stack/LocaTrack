@@ -25,12 +25,11 @@ RUN docker-php-ext-install \
 # Copie de Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copie et installation des dépendances PHP
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
-# Copie du reste du code (qui contient déjà le dossier public/build fait en local)
+# 1. Copie d'abord TOUT le code source (ce qui inclut artisan, composer.json et composer.lock)
 COPY . .
+
+# 2. Ensuite seulement, on lance composer install (ainsi 'artisan' est déjà présent)
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 # Création des dossiers de stockage Laravel nécessaires
 RUN mkdir -p \
