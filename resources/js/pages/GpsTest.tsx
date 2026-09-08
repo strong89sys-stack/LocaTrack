@@ -66,7 +66,7 @@ export default function GpsTest() {
 
                 try {
                     const response = await fetch(
-                        '/api/gps/positions',
+                        'https://locatrack-tpom.onrender.com/api/gps/positions',
                         {
                             method: 'POST',
 
