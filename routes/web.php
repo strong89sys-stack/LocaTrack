@@ -146,7 +146,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::get('/gps-test', function () {
-        return inertia('test/GpsTest');
+        return inertia('GpsTest');
     })->name('gps.test');
 });
 

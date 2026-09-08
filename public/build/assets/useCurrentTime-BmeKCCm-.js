@@ -1,1 +1,0 @@
-import{n as e,o as t,r as n}from"./jsx-runtime-I8uHACss.js";var r=e(),i=t(n(),1);function a(e){let t=(0,r.c)(3),n=e===void 0?6e4:e,[a,s]=(0,i.useState)(o),c,l;return t[0]===n?(c=t[1],l=t[2]):(c=()=>{let e=setInterval(()=>{s(Date.now())},n);return()=>clearInterval(e)},l=[n],t[0]=n,t[1]=c,t[2]=l),(0,i.useEffect)(c,l),a}function o(){return Date.now()}export{a as t};
