@@ -167,9 +167,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 |--------------------------------------------------------------------------
 */
 
-// Route::post(
-//     '/gps/positions',
-//     [GpsController::class, 'store']
-// )->name('gps.store');
+Route::post(
+    '/gps/positions',
+    [GpsController::class, 'store']
+)->name('gps.store');
 
 require __DIR__.'/settings.php';

@@ -47,12 +47,12 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
 
 EXPOSE 10000
 
-# Export de la variable d'environnement pour toute la session du conteneur, 
+# Export de la variable d'environnement pour toute la session du conteneur,
 # puis exécution séquentielle des commandes
 CMD export CACHE_STORE=file && \
     php artisan config:clear && \
     php artisan route:clear && \
     php artisan view:clear && \
     php artisan migrate --force && \
-    # php artisan db:seed --force && \
+    php artisan db:seed --force && \
     php artisan serve --host=0.0.0.0 --port=10000

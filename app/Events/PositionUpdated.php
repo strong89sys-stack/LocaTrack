@@ -45,8 +45,8 @@ class PositionUpdated implements ShouldBroadcast
     {
         $coordonnees = DB::selectOne(
             'SELECT
-                ST_Latitude(coordonnees) as latitude,
-                ST_Longitude(coordonnees) as longitude
+                ST_Y(coordonnees) AS latitude,
+                ST_X(coordonnees) AS longitude
             FROM position_gps
             WHERE id = ?',
             [$this->position->id]

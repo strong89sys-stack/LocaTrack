@@ -72,13 +72,12 @@ class GpsController extends Controller
             'appareil_id' => $appareil->id,
 
             'coordonnees' => DB::raw(
-                "ST_GeomFromText(
-                    'POINT(
-                        {$validated['longitude']}
+                "ST_SetSRID(
+                    ST_MakePoint(
+                        {$validated['longitude']},
                         {$validated['latitude']}
-                    )',
-                    4326,
-                    'axis-order=long-lat'
+                    ),
+                    4326
                 )"
             ),
 
