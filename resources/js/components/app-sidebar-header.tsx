@@ -14,7 +14,7 @@ export function AppSidebarHeader({
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
             <div className="flex items-center">
-                <span className='text-[24px] text-[#000666] font-bold leading-8 tracking-[-0.01em] '>Système de Suivi de Matériel en Location</span>
+                <span className='text-[24px] text-[#000666] font-bold leading-8 tracking-[-0.01em] sm:text-[16px] '>Système de Suivi de Matériel en Location</span>
             </div>
         </header>
     );
