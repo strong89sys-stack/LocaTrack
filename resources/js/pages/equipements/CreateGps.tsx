@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { Cpu, LoaderCircle, Smartphone } from "lucide-react";
 
 interface Appareil {
@@ -40,7 +40,11 @@ export default function CreateGps({
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post("/appareils/create");
+        post("/appareils/create", {
+            onSuccess: () => {
+                router.visit('/equipements')
+            }
+        });
     };
 
     return (

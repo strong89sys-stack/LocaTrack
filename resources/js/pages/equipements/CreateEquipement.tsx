@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { ImagePlus, LoaderCircle } from "lucide-react";
 
 interface Equipement {
@@ -30,7 +30,11 @@ export default function CreateEquipement({ statuts }: CreateProps) {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post("/equipements/create");
+        post("/equipements/create", {
+            onSuccess: () => {
+                router.visit('/equipements')
+            }
+        });
     };
 
     return (

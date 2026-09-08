@@ -172,4 +172,8 @@ Route::post(
     [GpsController::class, 'store']
 )->name('gps.store');
 
+Route::get('/gps-test', function () {
+    return inertia('GpsTest');
+})->name('gps.test');
+
 require __DIR__.'/settings.php';
