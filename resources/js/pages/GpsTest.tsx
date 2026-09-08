@@ -11,7 +11,9 @@ export default function GpsTest() {
 
     useEffect(() => {
         if (!navigator.geolocation) {
+
             setStatus('La géolocalisation n’est pas supportée.');
+
             return;
         }
 
@@ -38,6 +40,12 @@ export default function GpsTest() {
                  */
                 const now = Date.now();
 
+                const battery = await navigator.getBattery();
+
+                const niveauBatterie = Math.round(battery.level * 100);
+
+                console.log(niveauBatterie);
+
                 if (now - lastSendRef.current < 10000) {
                     return;
                 }
@@ -54,10 +62,11 @@ export default function GpsTest() {
                         },
 
                         body: JSON.stringify({
-                            imei: 'TEST-LOCATRACK-001',
+                            imei: 'iPhone 11 Pro',
                             latitude: lat,
                             longitude: lon,
                             vitesse: speed,
+                            niveau_batterie: niveauBatterie,
                         }),
                     });
 
