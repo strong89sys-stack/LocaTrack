@@ -53,7 +53,7 @@ export default function GpsTest() {
                 lastSendRef.current = now;
 
                 try {
-                    const response = await fetch('/gps/positions', {
+                    const response = await fetch('/api/gps/positions', {
                         method: 'POST',
 
                         headers: {
