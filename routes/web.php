@@ -143,6 +143,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         '/clients/create',
         [ClientController::class, 'createClient']
     )->name('clients.store');
+
+
+    Route::get('/gps-test', function () {
+        return inertia('test/GpsTest');
+    })->name('gps.test');
 });
 
 /*
@@ -167,13 +172,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::post(
-    '/gps/positions',
-    [GpsController::class, 'store']
-)->name('gps.store');
-
-Route::get('/gps-test', function () {
-    return inertia('GpsTest');
-})->name('gps.test');
+// Route::post(
+//     '/gps/positions',
+//     [GpsController::class, 'store']
+// )->name('gps.store');
 
 require __DIR__.'/settings.php';
