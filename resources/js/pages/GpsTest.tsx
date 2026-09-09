@@ -4,9 +4,11 @@ export default function GpsTest() {
     const [latitude, setLatitude] = useState<number | null>(null);
     const [longitude, setLongitude] = useState<number | null>(null);
     const [vitesse, setVitesse] = useState<number>(0);
+
     const [status, setStatus] = useState(
         'Initialisation du GPS...'
     );
+
     const [lastSent, setLastSent] = useState<string | null>(
         null
     );
@@ -31,28 +33,29 @@ export default function GpsTest() {
                     ? position.coords.speed * 3.6
                     : 0;
 
-                // Affichage de la position reçue
+                // Mise à jour de l'affichage
                 setLatitude(lat);
                 setLongitude(lon);
                 setVitesse(speed);
 
                 setStatus('Position GPS reçue 📍');
 
-                console.log('========================');
-                console.log('GPS reçu');
+                console.log('==============================');
+                console.log('📍 GPS reçu');
                 console.log('Latitude :', lat);
                 console.log('Longitude :', lon);
                 console.log('Vitesse :', speed);
-                console.log('========================');
+                console.log('==============================');
 
                 /*
-                 * On limite les envois à 1 toutes les 10 secondes.
+                 * On limite les envois à un envoi
+                 * toutes les 10 secondes.
                  */
                 const now = Date.now();
 
                 if (now - lastSendRef.current < 10000) {
                     console.log(
-                        'Envoi ignoré : moins de 10 secondes depuis le dernier envoi.'
+                        '⏳ Envoi ignoré : moins de 10 secondes.'
                     );
 
                     return;
@@ -61,12 +64,17 @@ export default function GpsTest() {
                 lastSendRef.current = now;
 
                 console.log(
-                    'Tentative d’envoi vers Laravel...'
+                    '🚀 Tentative d’envoi vers Laravel...'
                 );
 
                 try {
+                    const url =
+                        'https://locatrack-tpom.onrender.com/api/gps/positions';
+
+                    console.log('🌐 URL :', url);
+
                     const response = await fetch(
-                        'https://locatrack-tpom.onrender.com/api/gps/positions',
+                        url,
                         {
                             method: 'POST',
 
@@ -87,15 +95,26 @@ export default function GpsTest() {
                     );
 
                     console.log(
-                        'Statut HTTP Laravel :',
+                        '📡 Statut HTTP :',
                         response.status
                     );
 
-                    const data = await response.json();
+                    console.log(
+                        '🌐 URL appelée :',
+                        response.url
+                    );
+
+                    /*
+                     * On récupère la réponse brute.
+                     * Cela permet de voir exactement
+                     * ce que Laravel / Render retourne.
+                     */
+                    const responseText =
+                        await response.text();
 
                     console.log(
-                        'Réponse Laravel :',
-                        data
+                        '📦 Réponse serveur :',
+                        responseText
                     );
 
                     if (!response.ok) {
@@ -116,19 +135,19 @@ export default function GpsTest() {
 
                 } catch (error) {
                     console.error(
-                        'Erreur lors de l’envoi GPS :',
+                        '❌ Erreur FETCH :',
                         error
                     );
 
                     setStatus(
-                        'Impossible de contacter le serveur.'
+                        'Erreur réseau lors de l’envoi ❌'
                     );
                 }
             },
 
             (error) => {
                 console.error(
-                    'Erreur de géolocalisation :',
+                    '❌ Erreur de géolocalisation :',
                     error
                 );
 
@@ -165,9 +184,11 @@ export default function GpsTest() {
             }
         );
 
-        // Nettoyage lorsque le composant est démonté
+        // Nettoyage
         return () => {
-            navigator.geolocation.clearWatch(watchId);
+            navigator.geolocation.clearWatch(
+                watchId
+            );
         };
     }, []);
 
