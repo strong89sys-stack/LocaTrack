@@ -56,7 +56,7 @@ export default function Show({
         equipement.statut.libelle.toLowerCase() === "disponible";
 
     return (
-        <div className="min-h-screen bg-gray-50 px-6 py-8">
+        <div className="min-h-screen bg-background px-6 py-8">
 
             <div className="mx-auto max-w-6xl">
 
@@ -70,7 +70,7 @@ export default function Show({
                             Gestion des équipements
                         </p>
 
-                        <h1 className="mt-1 text-2xl font-bold text-[#121c28]">
+                        <h1 className="mt-1 text-2xl font-bold text-foreground">
                             Détails de l'équipement
                         </h1>
 
@@ -79,7 +79,7 @@ export default function Show({
                     <button
                         type="button"
                         onClick={handleBack}
-                        className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 hover:shadow"
+                        className="rounded-xl border-0 bg-transparent px-4 py-2 text-sm font-semibold text-gray-400 shadow-sm transition hover:text-white hover:shadow"
                     >
                         ← Retour
                     </button>
@@ -89,14 +89,14 @@ export default function Show({
 
                 {/* CARTE PRINCIPALE */}
 
-                <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+                <div className="overflow-hidden rounded-3xl border border-border bg-background shadow-sm">
 
                     <div className="grid grid-cols-1 lg:grid-cols-2">
 
 
                         {/* IMAGE */}
 
-                        <div className="relative h-[420px] overflow-hidden bg-gray-100">
+                        <div className="relative h-105 overflow-hidden bg-gray-100">
 
                             <img
                                 src={`/storage/${equipement.image}`}
@@ -104,7 +104,7 @@ export default function Show({
                                 className="h-full w-full object-cover transition duration-500 hover:scale-105"
                             />
 
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
 
                             <div className="absolute bottom-6 left-6">
 
@@ -135,7 +135,7 @@ export default function Show({
                                         Référence
                                     </p>
 
-                                    <h2 className="mt-1 text-3xl font-bold text-[#121c28]">
+                                    <h2 className="mt-1 text-3xl font-bold text-foreground">
                                         {equipement.reference}
                                     </h2>
 
@@ -144,8 +144,8 @@ export default function Show({
                                 <span
                                     className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold ${
                                         disponible
-                                            ? "bg-green-50 text-green-700"
-                                            : "bg-red-50 text-red-700"
+                                            ? "text-green-700"
+                                            : "text-red-700"
                                     }`}
                                 >
 
@@ -166,7 +166,7 @@ export default function Show({
 
                             {/* SÉPARATION */}
 
-                            <div className="my-8 h-px bg-gray-100" />
+                            <div className="my-8 h-px bg-border" />
 
 
                             {/* INFORMATIONS */}
@@ -180,13 +180,13 @@ export default function Show({
 
                                 {/* ID */}
 
-                                <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5">
+                                <div className="rounded-2xl border border-border bg-background p-5">
 
                                     <p className="text-xs text-gray-400">
                                         Identifiant
                                     </p>
 
-                                    <p className="mt-2 text-lg font-bold text-[#121c28]">
+                                    <p className="mt-2 text-lg font-bold text-foreground">
                                         #{equipement.id}
                                     </p>
 
@@ -195,13 +195,13 @@ export default function Show({
 
                                 {/* MARQUE */}
 
-                                <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5">
+                                <div className="rounded-2xl border border-border bg-background p-5">
 
                                     <p className="text-xs text-gray-400">
                                         Marque
                                     </p>
 
-                                    <p className="mt-2 text-lg font-bold text-[#121c28]">
+                                    <p className="mt-2 text-lg font-bold text-foreground">
                                         {equipement.marque}
                                     </p>
 
@@ -210,13 +210,13 @@ export default function Show({
 
                                 {/* MODELE */}
 
-                                <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5">
+                                <div className="rounded-2xl border border-border bg-background p-5">
 
                                     <p className="text-xs text-gray-400">
                                         Modèle
                                     </p>
 
-                                    <p className="mt-2 text-lg font-bold text-[#121c28]">
+                                    <p className="mt-2 text-lg font-bold text-foreground">
                                         {equipement.modele}
                                     </p>
 
@@ -225,7 +225,7 @@ export default function Show({
 
                                 {/* STATUT */}
 
-                                <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5 sm:col-span-2">
+                                <div className="rounded-2xl border border-border bg-background p-5 sm:col-span-2">
 
                                     <div className="flex items-start justify-between gap-4">
 
@@ -261,8 +261,8 @@ export default function Show({
                                         onChange={handleStatutChange}
                                         className={`mt-4 w-full rounded-xl border px-4 py-3 text-sm font-semibold outline-none transition ${
                                             enLocation
-                                                ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400"
-                                                : "cursor-pointer border-gray-200 bg-white text-gray-800 focus:border-[#00647c] focus:ring-2 focus:ring-[#00647c]/10"
+                                                ? "cursor-not-allowed border-border bg-background text-foreground"
+                                                : "cursor-pointer border-border bg-background text-gray-800 focus:border-[#00647c] focus:ring-2 focus:ring-[#00647c]/10"
                                         }`}
                                     >
 
@@ -292,7 +292,7 @@ export default function Show({
 
                             {/* FOOTER */}
 
-                            <div className="mt-8 flex items-center justify-between border-t border-gray-100 pt-6">
+                            <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
 
                                 <div>
 

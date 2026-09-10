@@ -33,8 +33,8 @@ export default function LocationSearch({
                     w-full
                     rounded-xl
                     border
-                    border-[#cbd5e1]
-                    bg-white
+                    border-border
+                    bg-transparent
                     py-3
                     pl-12
                     pr-4

@@ -141,11 +141,11 @@ export default function RentalCard({ location }: RentalCardProps) {
         location.date_fin.substring(0, 10);
 
     return (
-        <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+        <div className="group overflow-hidden rounded-2xl border border-border bg-background shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
 
             {/* IMAGE */}
 
-            <div className="relative h-[170px] overflow-hidden bg-gray-100">
+            <div className="relative h-42.5 overflow-hidden bg-gray-100 backdrop-blur-3xl">
 
                 <img
                     src={imageUrl}
@@ -173,7 +173,7 @@ export default function RentalCard({ location }: RentalCardProps) {
                     <div className="min-w-0">
 
                         <h3
-                            className="truncate text-lg font-bold text-[#172033]"
+                            className="truncate text-lg font-bold text-foreground"
                             title={equipmentName}
                         >
                             {equipmentName}
@@ -198,21 +198,21 @@ export default function RentalCard({ location }: RentalCardProps) {
                             onClick={() =>
                                 setMenuOpen((value) => !value)
                             }
-                            className="rounded-full p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-800"
+                            className="rounded-full p-2 text-gray-400 transition hover:text-gray-800 cursor-pointer"
                         >
                             <FiMoreVertical size={20} />
                         </button>
 
 
                         {menuOpen && (
-                            <div className="absolute right-0 top-10 z-50 w-52 overflow-hidden rounded-xl border border-gray-200 bg-white py-1 shadow-lg">
+                            <div className="absolute right-0 top-10 z-50 w-52 overflow-hidden rounded-xl border border-border bg-background py-1 shadow-lg">
 
                                 {!isOverdue && (
                                     <>
                                         <button
                                             type="button"
                                             onClick={handleShowExtend}
-                                            className="w-full px-4 py-2.5 text-left text-sm font-medium text-[#00647c] transition hover:bg-[#00647c]/5"
+                                            className="w-full px-4 py-2.5 text-left text-sm font-medium text-[#00647c] transition hover:bg-border"
                                         >
                                             Prolonger la location
                                         </button>
@@ -220,7 +220,7 @@ export default function RentalCard({ location }: RentalCardProps) {
                                         <button
                                             type="button"
                                             onClick={handleExpire}
-                                            className="w-full px-4 py-2.5 text-left text-sm font-medium text-red-600 transition hover:bg-red-50"
+                                            className="w-full px-4 py-2.5 text-left text-sm font-medium text-red-600 transition hover:bg-border"
                                         >
                                             Marquer comme terminée
                                         </button>
@@ -244,9 +244,9 @@ export default function RentalCard({ location }: RentalCardProps) {
                 {/* FORMULAIRE PROLONGATION */}
 
                 {showExtend && !isOverdue && (
-                    <div className="mt-5 rounded-2xl border border-[#00647c]/10 bg-[#00647c]/5 p-4">
+                    <div className="mt-5 rounded-2xl border border-border bg-background p-4">
 
-                        <p className="text-sm font-bold text-[#172033]">
+                        <p className="text-sm font-bold text-foreground">
                             Prolonger la location
                         </p>
 
@@ -273,7 +273,7 @@ export default function RentalCard({ location }: RentalCardProps) {
                                         event.target.value
                                     )
                                 }
-                                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none transition focus:border-[#00647c] focus:ring-2 focus:ring-[#00647c]/10"
+                                className="w-full rounded-xl border border-gray-200 bg-background px-3 py-2.5 text-sm text-gray-700 outline-none transition focus:border-[#00647c] focus:ring-2 focus:ring-[#00647c]/10"
                             />
 
                         </div>

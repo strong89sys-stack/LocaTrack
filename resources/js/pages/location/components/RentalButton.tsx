@@ -44,16 +44,16 @@ export default function RentalButton() {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
                             transition={{ duration: 0.2 }}
-                            className="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl"
+                            className="w-full max-w-lg overflow-hidden rounded-3xl bg-background shadow-2xl"
                         >
                             {/* HEADER */}
-                            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+                            <div className="flex items-center justify-between border-b border-border px-6 py-5">
                                 <div>
                                     <p className="text-xs font-semibold uppercase tracking-widest text-[#00647c]">
                                         Nouvelle location
                                     </p>
 
-                                    <h2 className="mt-1 text-xl font-bold text-[#121c28]">
+                                    <h2 className="mt-1 text-xl font-bold text-foreground">
                                         Créer un contrat
                                     </h2>
 
@@ -77,13 +77,13 @@ export default function RentalButton() {
                                 <button
                                     type="button"
                                     onClick={handleNewClient}
-                                    className="group rounded-2xl border border-gray-200 bg-white p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#00647c]/30 hover:shadow-lg"
+                                    className="group rounded-2xl border border-border bg-background p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#00647c]/30 hover:shadow-lg"
                                 >
                                     <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#00647c]/10 text-2xl text-[#00647c]">
                                         <IoMdPersonAdd />
                                     </div>
 
-                                    <h3 className="font-bold text-[#121c28]">
+                                    <h3 className="font-bold text-foreground">
                                         Nouveau client
                                     </h3>
 
@@ -101,13 +101,13 @@ export default function RentalButton() {
                                 <button
                                     type="button"
                                     onClick={handleExistingClient}
-                                    className="group rounded-2xl border border-gray-200 bg-white p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#00647c]/30 hover:shadow-lg"
+                                    className="group rounded-2xl border border-border bg-background p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#00647c]/30 hover:shadow-lg"
                                 >
                                     <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#00647c]/10 text-2xl text-[#00647c]">
                                         <IoPerson />
                                     </div>
 
-                                    <h3 className="font-bold text-[#121c28]">
+                                    <h3 className="font-bold text-foreground">
                                         Client existant
                                     </h3>
 
@@ -123,7 +123,7 @@ export default function RentalButton() {
                             </div>
 
                             {/* FOOTER */}
-                            <div className="border-t border-gray-100 bg-gray-50 px-6 py-4">
+                            <div className="border-t border-border bg-background px-6 py-4">
                                 <p className="text-center text-xs text-gray-400">
                                     Vous pourrez sélectionner l'équipement et définir les dates de location à l'étape suivante.
                                 </p>

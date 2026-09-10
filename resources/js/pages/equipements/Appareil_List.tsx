@@ -55,8 +55,8 @@ export default function Appareil_List({
                                 overflow-hidden
                                 rounded-2xl
                                 border
-                                border-gray-200
-                                bg-white
+                                border-border
+                                bg-background
                                 text-left
                                 shadow-sm
                                 transition-all
@@ -96,7 +96,7 @@ export default function Appareil_List({
                                 <div className="
                                     absolute
                                     inset-0
-                                    bg-gradient-to-t
+                                    bg-linear-to-t
                                     from-black/60
                                     via-black/10
                                     to-transparent
@@ -159,7 +159,7 @@ export default function Appareil_List({
                                         font-medium
                                         uppercase
                                         tracking-wider
-                                        text-white/70
+                                        text-foreground/70
                                     ">
                                         Appareil GPS
                                     </p>
@@ -198,7 +198,7 @@ export default function Appareil_List({
                                     <div className="
                                         col-span-2
                                         rounded-xl
-                                        bg-gray-50
+                                        bg-background
                                         p-3
                                     ">
 
@@ -215,7 +215,7 @@ export default function Appareil_List({
                                             text-sm
                                             font-semibold
                                             tracking-wide
-                                            text-gray-900
+                                            text-foreground
                                         ">
                                             {appareil.imei}
                                         </p>
@@ -227,7 +227,7 @@ export default function Appareil_List({
 
                                     <div className="
                                         rounded-xl
-                                        bg-gray-50
+                                        bg-background
                                         p-3
                                     ">
 
@@ -243,7 +243,7 @@ export default function Appareil_List({
                                             mt-1
                                             text-sm
                                             font-semibold
-                                            text-gray-900
+                                            text-foreground
                                         ">
                                             {appareil.numero_sim}
                                         </p>
@@ -255,7 +255,7 @@ export default function Appareil_List({
 
                                     <div className="
                                         rounded-xl
-                                        bg-gray-50
+                                        bg-background
                                         p-3
                                     ">
 
@@ -290,7 +290,7 @@ export default function Appareil_List({
                                             <span className="
                                                 text-sm
                                                 font-semibold
-                                                text-gray-900
+                                                text-foreground
                                             ">
                                                 {appareil.statut}
                                             </span>
@@ -305,7 +305,7 @@ export default function Appareil_List({
                                     <div className="
                                         col-span-2
                                         rounded-xl
-                                        bg-gray-50
+                                        bg-background
                                         p-3
                                     ">
 
@@ -327,7 +327,7 @@ export default function Appareil_List({
                                             <span className="
                                                 text-xs
                                                 font-bold
-                                                text-gray-900
+                                                text-foreground
                                             ">
                                                 {battery}%
                                             </span>
@@ -376,7 +376,7 @@ export default function Appareil_List({
                                     items-center
                                     justify-between
                                     border-t
-                                    border-gray-100
+                                    border-border
                                     pt-4
                                 ">
 

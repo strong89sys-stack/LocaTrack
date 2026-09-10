@@ -30,9 +30,9 @@ export default function Show({ appareil }: ShowProps) {
         appareil.statut.toLowerCase() === "connecté";
 
     return (
-        <div className="min-h-screen bg-gray-50 px-6 py-8">
+        <div className="min-h-screen bg-background px-6 py-8">
 
-            <div className="mx-auto max-w-5xl">
+            <div className="mx-auto max-w-5xl bg-transparent">
 
                 {/* HEADER */}
                 <div className="mb-6 flex items-center justify-between">
@@ -46,7 +46,7 @@ export default function Show({ appareil }: ShowProps) {
                             mt-1
                             text-2xl
                             font-bold
-                            text-[#121c28]
+                            text-foreground
                         ">
                             Détails de l'appareil
                         </h1>
@@ -57,17 +57,16 @@ export default function Show({ appareil }: ShowProps) {
                         onClick={handleBack}
                         className="
                             rounded-xl
-                            border
-                            border-gray-200
-                            bg-white
+                            border-0
+                            bg-transparent
                             px-4
                             py-2.5
                             text-sm
                             font-semibold
-                            text-gray-700
+                            text-gray-400
                             shadow-sm
                             transition
-                            hover:bg-gray-50
+                            hover:text-foreground
                             hover:shadow
                         "
                     >
@@ -82,8 +81,8 @@ export default function Show({ appareil }: ShowProps) {
                     overflow-hidden
                     rounded-3xl
                     border
-                    border-gray-200
-                    bg-white
+                    border-border
+                    bg-background
                     shadow-sm
                 ">
 
@@ -218,8 +217,8 @@ export default function Show({ appareil }: ShowProps) {
                                 <div className="
                                     rounded-2xl
                                     border
-                                    border-gray-100
-                                    bg-gray-50
+                                    border-border
+                                    bg-background
                                     p-5
                                 ">
 
@@ -240,6 +239,7 @@ export default function Show({ appareil }: ShowProps) {
                                             bg-white
                                             text-sm
                                             shadow-sm
+                                            text-black
                                         ">
                                             #
                                         </span>
@@ -257,7 +257,7 @@ export default function Show({ appareil }: ShowProps) {
                                     <p className="
                                         text-xl
                                         font-bold
-                                        text-[#121c28]
+                                        text-foreground
                                     ">
                                         #{appareil.id}
                                     </p>
@@ -269,8 +269,8 @@ export default function Show({ appareil }: ShowProps) {
                                 <div className="
                                     rounded-2xl
                                     border
-                                    border-gray-100
-                                    bg-gray-50
+                                    border-border
+                                    bg-background
                                     p-5
                                 ">
 
@@ -310,7 +310,7 @@ export default function Show({ appareil }: ShowProps) {
                                         text-lg
                                         font-bold
                                         tracking-wide
-                                        text-[#121c28]
+                                        text-foreground
                                     ">
                                         {appareil.imei}
                                     </p>
@@ -322,8 +322,8 @@ export default function Show({ appareil }: ShowProps) {
                                 <div className="
                                     rounded-2xl
                                     border
-                                    border-gray-100
-                                    bg-gray-50
+                                    border-border
+                                    bg-background
                                     p-5
                                 ">
 
@@ -361,7 +361,7 @@ export default function Show({ appareil }: ShowProps) {
                                     <p className="
                                         text-lg
                                         font-bold
-                                        text-[#121c28]
+                                        text-foreground
                                     ">
                                         {appareil.numero_sim}
                                     </p>
@@ -373,8 +373,8 @@ export default function Show({ appareil }: ShowProps) {
                                 <div className="
                                     rounded-2xl
                                     border
-                                    border-gray-100
-                                    bg-gray-50
+                                    border-border
+                                    bg-background
                                     p-5
                                 ">
 
@@ -395,6 +395,7 @@ export default function Show({ appareil }: ShowProps) {
                                             bg-white
                                             text-sm
                                             shadow-sm
+                                            text-black
                                         ">
                                             ●
                                         </span>
@@ -431,7 +432,7 @@ export default function Show({ appareil }: ShowProps) {
                                         <p className="
                                             text-lg
                                             font-bold
-                                            text-[#121c28]
+                                            text-foreground
                                         ">
                                             {appareil.statut}
                                         </p>
@@ -449,7 +450,7 @@ export default function Show({ appareil }: ShowProps) {
                         <div className="
                             my-8
                             h-px
-                            bg-gray-100
+                            bg-border
                         " />
 
 
@@ -491,7 +492,7 @@ export default function Show({ appareil }: ShowProps) {
                                     ${
                                         batterieFaible
                                             ? "text-red-500"
-                                            : "text-[#121c28]"
+                                            : "text-foreground"
                                     }
                                 `}>
                                     {batterie}%
@@ -506,7 +507,7 @@ export default function Show({ appareil }: ShowProps) {
                                 w-full
                                 overflow-hidden
                                 rounded-full
-                                bg-gray-100
+                                bg-border
                             ">
 
                                 <div
@@ -559,7 +560,7 @@ export default function Show({ appareil }: ShowProps) {
                             flex-col
                             gap-4
                             border-t
-                            border-gray-100
+                            border-border
                             pt-6
                             sm:flex-row
                             sm:items-center

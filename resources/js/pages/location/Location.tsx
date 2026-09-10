@@ -86,7 +86,7 @@ export default function Location({ locations }: LocationProps) {
     }, [locations, search, statusFilter, sortAsc]);
 
     return (
-        <div className="min-h-screen bg-[#f6f8fd]">
+        <div className="min-h-screen bg-background">
             <div className="mx-auto max-w-[1600px] px-6 py-8">
 
                 {/* HEADER */}
@@ -99,7 +99,7 @@ export default function Location({ locations }: LocationProps) {
                                 Gestion des locations
                             </div>
 
-                            <h1 className="text-3xl font-bold tracking-tight text-[#121c28] md:text-4xl">
+                            <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
                                 Locations
                             </h1>
 
@@ -109,12 +109,12 @@ export default function Location({ locations }: LocationProps) {
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <div className="hidden rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm sm:block">
+                            <div className="hidden rounded-xl border border-border bg-background px-4 py-3 shadow-sm sm:block">
                                 <p className="text-xs font-medium uppercase tracking-wider text-gray-400">
                                     Locations affichées
                                 </p>
 
-                                <p className="mt-1 text-xl font-bold text-[#121c28]">
+                                <p className="mt-1 text-xl font-bold text-foreground">
                                     {filteredLocations.length}
                                 </p>
                             </div>
@@ -125,7 +125,7 @@ export default function Location({ locations }: LocationProps) {
                 </motion.div>
 
                 {/* BARRE DE RECHERCHE */}
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="mb-5 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="mb-5 rounded-2xl border border-border bg-background p-4 shadow-sm">
                     <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
 
                         <div className="flex-1">
@@ -169,7 +169,7 @@ export default function Location({ locations }: LocationProps) {
                             <RentalGrid locations={filteredLocations} />
                         </motion.div>
                     ) : (
-                        <motion.div key="empty" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="flex min-h-[420px] items-center justify-center rounded-3xl border border-dashed border-gray-300 bg-white">
+                        <motion.div key="empty" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="flex min-h-105 items-center justify-center rounded-3xl border border-dashed border-border bg-transparent">
                             <div className="max-w-md px-6 text-center">
 
                                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#00647c]/10 text-2xl text-[#00647c]">

@@ -45,7 +45,7 @@ export default function EquipementList({
     };
 
     return (
-        <div className="max-w-[1600px] mx-auto px-6 py-8">
+        <div className="max-w-[1600px] mx-auto px-6 py-8 bg-transparent">
 
             <div className="
                 grid
@@ -75,8 +75,8 @@ export default function EquipementList({
                                 overflow-hidden
                                 rounded-2xl
                                 border
-                                border-gray-200
-                                bg-white
+                                border-border
+                                bg-background
                                 text-left
                                 shadow-sm
                                 transition-all
@@ -116,7 +116,7 @@ export default function EquipementList({
                                 <div className="
                                     absolute
                                     inset-0
-                                    bg-gradient-to-t
+                                    bg-linear-to-t
                                     from-black/60
                                     via-black/10
                                     to-transparent
@@ -235,7 +235,7 @@ export default function EquipementList({
 
                                     <div className="
                                         rounded-xl
-                                        bg-gray-50
+                                        bg-background
                                         p-3
                                     ">
 
@@ -272,7 +272,7 @@ export default function EquipementList({
                                         <p className="
                                             text-sm
                                             font-semibold
-                                            text-gray-900
+                                            text-foreground
                                         ">
                                             {isOnline
                                                 ? "Connecté"
@@ -287,7 +287,7 @@ export default function EquipementList({
 
                                     <div className="
                                         rounded-xl
-                                        bg-gray-50
+                                        bg-background
                                         p-3
                                     ">
 
@@ -303,7 +303,7 @@ export default function EquipementList({
                                             mt-1
                                             text-sm
                                             font-semibold
-                                            text-gray-900
+                                            text-foreground
                                         ">
                                             {equipement.position
                                                 ? `${equipement.position.vitesse} km/h`
@@ -319,7 +319,7 @@ export default function EquipementList({
                                     <div className="
                                         col-span-2
                                         rounded-xl
-                                        bg-gray-50
+                                        bg-background
                                         p-3
                                     ">
 
@@ -341,7 +341,7 @@ export default function EquipementList({
                                             <span className="
                                                 text-xs
                                                 font-bold
-                                                text-gray-900
+                                                text-foreground
                                             ">
                                                 {battery}%
                                             </span>
@@ -392,7 +392,7 @@ export default function EquipementList({
                                     items-center
                                     justify-between
                                     border-t
-                                    border-gray-100
+                                    border-border
                                     pt-4
                                 ">
 

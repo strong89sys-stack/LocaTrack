@@ -113,23 +113,23 @@ export default function InfoCard({equipements, alertesActives}: CardProps){
 
                 return (
                     item.alert ?
-                        (<div key={index} className='p-5 flex justify-between flex-col uppercase bg-white rounded-md border border-[#c6c5d4] border-l-8 border-l-red-900 shadow hover:-translate-y-1.25 transition-all '>
+                        (<div key={index} className='p-5 flex justify-between flex-col uppercase bg-card rounded-md border border-border border-l-8 border-l-red-900 shadow hover:-translate-y-1.25 transition-all '>
                             <div className='flex items-center justify-between mb-4'>
                                 <span className='text-[13px] text-[#3e484d] leading-4 font-bold font-[Inter, sans] text-[rgba(62, 72, 77, 1)]'>
                                     {item.title}
                                 </span>
-                                <span className='text-[20px] text-[#ba1a1a] leading-5 bg-[#ffdad6] rounded-md p-1 '>
+                                <span className='text-[20px] text-[#ba1a1a] leading-5 bg-icon-bg rounded-md p-1 '>
                                     <Icon />
                                 </span>
                             </div>
                             <div className='text-[36px] font-bold leading-11'>{item.value}</div>
                         </div>) :
-                        (<div key={index} className='p-5 flex justify-between flex-col uppercase bg-white rounded-md border border-[#c6c5d4] shadow hover:-translate-y-1.25 transition-all '>
+                        (<div key={index} className='p-5 flex justify-between flex-col uppercase bg-card rounded-md border border-border shadow hover:-translate-y-1.25 transition-all '>
                             <div className="flex items-center justify-between mb-4">
                                 <span className='text-[13px] text-[#3e484d] leading-4 font-bold font-[Inter, sans] text-[rgba(62, 72, 77, 1)]'>
                                     {item.title}
                                 </span>
-                                <span className="text-[20px] text-[#007f9d] leading-5 bg-[#d9e3f4] rounded-md p-1 ">
+                                <span className="text-[20px] text-[#007f9d] leading-5 bg-icon-bg rounded-md p-1 ">
                                     <Icon />
                                 </span>
                             </div>

@@ -65,10 +65,10 @@ export default function Index({ equipements, appareils }: IndexProps) {
     };
 
     return (
-        <div className="min-h-screen bg-[#f5f7f8]">
+        <div className="min-h-screen bg-background">
 
             {/* HEADER */}
-            <header className="border-b border-gray-200 bg-white">
+            <header className="border-b border-border bg-transparent">
                 <div className="mx-auto max-w-[1600px] px-6 py-7">
 
                     <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
@@ -79,7 +79,7 @@ export default function Index({ equipements, appareils }: IndexProps) {
                                 Gestion du parc
                             </div>
 
-                            <h1 className="text-3xl font-bold tracking-tight text-[#121c28] md:text-4xl">
+                            <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
                                 Matériel & GPS
                             </h1>
 
@@ -102,7 +102,7 @@ export default function Index({ equipements, appareils }: IndexProps) {
                     {/* STATISTIQUES */}
                     <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2">
 
-                        <div className="flex items-center justify-between rounded-2xl border border-gray-200 bg-gray-50 p-5 transition-all duration-200 hover:border-[#00647c]/20 hover:bg-white hover:shadow-sm">
+                        <div className="flex items-center justify-between rounded-2xl border-2 border-border bg-background p-5 transition-all duration-200 hover:border-[#00647c]/20 hover:bg-background/50 hover:shadow-sm">
                             <div className="flex items-center gap-4">
 
                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#00647c]/10 text-xl text-[#00647c]">
@@ -114,7 +114,7 @@ export default function Index({ equipements, appareils }: IndexProps) {
                                         Équipements
                                     </p>
 
-                                    <p className="mt-1 text-2xl font-bold text-[#121c28]">
+                                    <p className="mt-1 text-2xl font-bold text-foreground">
                                         {equipements.length}
                                     </p>
                                 </div>
@@ -124,7 +124,7 @@ export default function Index({ equipements, appareils }: IndexProps) {
                             <FiChevronRight className="text-gray-300" />
                         </div>
 
-                        <div className="flex items-center justify-between rounded-2xl border border-gray-200 bg-gray-50 p-5 transition-all duration-200 hover:border-[#00647c]/20 hover:bg-white hover:shadow-sm">
+                        <div className="flex items-center justify-between rounded-2xl border-2 border-border bg-background p-5 transition-all duration-200 hover:border-[#00647c]/20 hover:bg-background/50 hover:shadow-sm">
                             <div className="flex items-center gap-4">
 
                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#00647c]/10 text-2xl text-[#00647c]">
@@ -136,7 +136,7 @@ export default function Index({ equipements, appareils }: IndexProps) {
                                         Appareils GPS
                                     </p>
 
-                                    <p className="mt-1 text-2xl font-bold text-[#121c28]">
+                                    <p className="mt-1 text-2xl font-bold text-foreground">
                                         {appareils.length}
                                     </p>
                                 </div>
@@ -152,7 +152,7 @@ export default function Index({ equipements, appareils }: IndexProps) {
             </header>
 
             {/* NAVIGATION */}
-            <nav className="sticky top-0 z-20 border-b border-gray-200 bg-white/90 backdrop-blur-xl">
+            <nav className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur-xl">
                 <div className="mx-auto max-w-[1600px] px-6">
                     <div className="flex gap-8">
 
@@ -247,18 +247,18 @@ export default function Index({ equipements, appareils }: IndexProps) {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
                             transition={{ duration: 0.2 }}
-                            className="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl"
+                            className="w-full max-w-lg overflow-hidden rounded-3xl bg-background shadow-2xl"
                         >
 
                             {/* HEADER MODALE */}
-                            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+                            <div className="flex items-center justify-between border-b border-border px-6 py-5">
 
                                 <div>
                                     <p className="text-xs font-semibold uppercase tracking-widest text-[#00647c]">
                                         Nouveau
                                     </p>
 
-                                    <h2 className="mt-1 text-xl font-bold text-[#121c28]">
+                                    <h2 className="mt-1 text-xl font-bold text-foreground">
                                         Ajouter au parc
                                     </h2>
                                 </div>
@@ -280,13 +280,13 @@ export default function Index({ equipements, appareils }: IndexProps) {
                                 <button
                                     type="button"
                                     onClick={handleAddAppareil}
-                                    className="group rounded-2xl border border-gray-200 p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#00647c]/30 hover:shadow-lg"
+                                    className="group rounded-2xl border border-border p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#00647c]/30 hover:shadow-lg"
                                 >
                                     <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#00647c]/10 text-2xl text-[#00647c]">
                                         <TbGps />
                                     </div>
 
-                                    <h3 className="font-bold text-[#121c28]">
+                                    <h3 className="font-bold text-foreground">
                                         Appareil GPS
                                     </h3>
 
@@ -304,13 +304,13 @@ export default function Index({ equipements, appareils }: IndexProps) {
                                 <button
                                     type="button"
                                     onClick={handleAddEquipement}
-                                    className="group rounded-2xl border border-gray-200 p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#00647c]/30 hover:shadow-lg"
+                                    className="group rounded-2xl border border-border p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#00647c]/30 hover:shadow-lg"
                                 >
                                     <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#00647c]/10 text-xl text-[#00647c]">
                                         <MdPrecisionManufacturing />
                                     </div>
 
-                                    <h3 className="font-bold text-[#121c28]">
+                                    <h3 className="font-bold text-foreground">
                                         Équipement
                                     </h3>
 

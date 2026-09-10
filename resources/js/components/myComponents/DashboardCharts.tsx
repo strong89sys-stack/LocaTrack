@@ -201,11 +201,11 @@ export default function DashboardCharts({
                 ÉTAT DU PARC
             ========================================================= */}
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm xl:col-span-4">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm xl:col-span-4">
 
                 <div className="mb-4">
 
-                    <h3 className="text-lg font-semibold text-[#121c28]">
+                    <h3 className="text-lg font-semibold text-h3">
                         État du parc
                     </h3>
 
@@ -216,7 +216,7 @@ export default function DashboardCharts({
                 </div>
 
 
-                <div className="h-[280px]">
+                <div className="h-70">
 
                     <ResponsiveContainer
                         width="100%"
@@ -272,11 +272,11 @@ export default function DashboardCharts({
                 ACTIVITÉ DES LOCATIONS
             ========================================================= */}
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm xl:col-span-8">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm xl:col-span-8">
 
                 <div className="mb-4">
 
-                    <h3 className="text-lg font-semibold text-[#121c28]">
+                    <h3 className="text-lg font-semibold text-h3">
                         Activité des locations
                     </h3>
 
@@ -341,11 +341,11 @@ export default function DashboardCharts({
                 ÉTAT GPS
             ========================================================= */}
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm xl:col-span-6">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm xl:col-span-6">
 
                 <div className="mb-4">
 
-                    <h3 className="text-lg font-semibold text-[#121c28]">
+                    <h3 className="text-lg font-semibold text-h3">
                         État des appareils GPS
                     </h3>
 
@@ -356,7 +356,7 @@ export default function DashboardCharts({
                 </div>
 
 
-                <div className="h-[260px]">
+                <div className="h-65">
 
                     <ResponsiveContainer
                         width="100%"
@@ -408,11 +408,11 @@ export default function DashboardCharts({
                 BATTERIE
             ========================================================= */}
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm xl:col-span-6">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm xl:col-span-6">
 
                 <div className="mb-4">
 
-                    <h3 className="text-lg font-semibold text-[#121c28]">
+                    <h3 className="text-lg font-semibold text-h3">
                         Niveau des batteries
                     </h3>
 
@@ -423,7 +423,7 @@ export default function DashboardCharts({
                 </div>
 
 
-                <div className="h-[260px]">
+                <div className="h-65">
 
                     <ResponsiveContainer
                         width="100%"

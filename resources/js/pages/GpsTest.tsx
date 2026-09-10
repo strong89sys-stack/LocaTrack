@@ -69,7 +69,7 @@ export default function GpsTest() {
 
                 try {
                     const url =
-                        'https://locatrack-tpom.onrender.com/api/gps/positions';
+                        '/api/gps/positions';
 
                     console.log('🌐 URL :', url);
 

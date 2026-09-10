@@ -8,13 +8,19 @@ export function AppSidebarHeader({
     breadcrumbs?: BreadcrumbItemType[];
 }) {
     return (
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-b-[#c6c5d4] border-sidebar-border/50 px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-20 md:px-4 shadow">
-            <div className="flex items-center gap-2">
-                <SidebarTrigger className="-ml-1" />
+        <header className="flex h-16 shrink-0 items-center justify-between border-b-border border-sidebar-border/50 bg-background/95 px-4 md:px-6 backdrop-blur supports-backdrop-filter:bg-background/60 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16">
+            {/* Partie gauche : Trigger + Breadcrumbs */}
+            <div className="flex items-center gap-3">
+                <SidebarTrigger className="-ml-1 text-muted-foreground hover:text-foreground" />
+                <div className="hidden md:block h-4 w-px bg-border" />
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
+
+            {/* Partie droite : Titre de l'application */}
             <div className="flex items-center">
-                <span className='text-[14px] text-[#000666] font-bold leading-8 tracking-[-0.01em] lg:text-[24px] '>Système de Suivi de Matériel en Location</span>
+                <h1 className="text-xs sm:text-sm lg:text-base font-semibold tracking-tight text-foreground truncate max-w-50 sm:max-w-none">
+                    Système de Suivi de Matériel en Location
+                </h1>
             </div>
         </header>
     );

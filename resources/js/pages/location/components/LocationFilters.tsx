@@ -49,15 +49,15 @@ export default function LocationFilters({
                         gap-2
                         rounded-xl
                         border
-                        border-[#cbd5e1]
-                        bg-white
+                        border-border
+                        bg-background
                         px-5
                         py-3
                         text-sm
                         font-semibold
-                        text-[#1e293b]
+                        text-foreground
                         transition
-                        hover:bg-gray-50
+                        hover:bg-background/50
                     "
                 >
                     <FiSliders size={18} />
@@ -74,15 +74,15 @@ export default function LocationFilters({
                         gap-2
                         rounded-xl
                         border
-                        border-[#cbd5e1]
-                        bg-white
+                        border-border
+                        bg-background
                         px-5
                         py-3
                         text-sm
                         font-semibold
-                        text-[#1e293b]
+                        text-foreground
                         transition
-                        hover:bg-gray-50
+                        hover:bg-background/50
                     "
                 >
                     <FiList size={18} />
@@ -100,8 +100,8 @@ export default function LocationFilters({
                     items-center
                     rounded-xl
                     border
-                    border-[#cbd5e1]
-                    bg-[#eaf0fa]
+                    border-border
+                    bg-background
                     p-1
                 "
             >
@@ -121,7 +121,7 @@ export default function LocationFilters({
 
                             ${
                                 status === item
-                                    ? "bg-white text-[#00647c] shadow-sm"
+                                    ? "bg-[#00647c] text-white shadow-sm"
                                     : "text-[#334155] hover:text-[#00647c]"
                             }
                         `}

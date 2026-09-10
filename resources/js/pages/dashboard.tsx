@@ -81,7 +81,7 @@ export default function Dashboard({
             <Head title="Dashboard" />
 
 
-            <main className="min-h-screen bg-[#f6f8fd] p-4 sm:p-6">
+            <main className="min-h-screen bg-background p-4 sm:p-6">
 
                 <div className="mx-auto max-w-[1600px]">
 
@@ -94,7 +94,7 @@ export default function Dashboard({
 
                         <div>
 
-                            <h2 className="mb-1 text-2xl font-semibold tracking-tight text-[#121c28] sm:text-[28px]">
+                            <h2 className="mb-1 text-2xl font-semibold tracking-tight text-foreground sm:text-[28px]">
                                 Tableau de Bord
                             </h2>
 
@@ -106,13 +106,13 @@ export default function Dashboard({
                         </div>
 
 
-                        <div className="flex w-fit items-center gap-1 rounded-md border bg-white px-3 py-1.5 text-xs font-semibold tracking-wider text-[#3e484d]">
+                        {/* <div className="flex w-fit items-center gap-1 rounded-md border bg-white px-3 py-1.5 text-xs font-semibold tracking-wider text-[#3e484d]">
 
                             <VscDebugRestart />
 
                             Mis à jour à l'instant
 
-                        </div>
+                        </div> */}
 
                     </div>
 

@@ -135,19 +135,19 @@ export default function MapCard({ equipements, selectedPosition }: MapProps) {
     };
 
     return (
-        <section className="order-1 relative flex h-[55vh] min-h-[400px] w-full flex-col overflow-hidden bg-white lg:order-none lg:col-span-9 lg:h-screen">
-            <div className="relative z-10 flex shrink-0 items-center gap-2 overflow-x-auto border-b border-gray-200 bg-white/95 p-3 shadow-sm backdrop-blur-md sm:p-4">
+        <section className="order-1 relative flex h-[55vh] min-h-100 w-full flex-col overflow-hidden bg-background lg:order-0 lg:col-span-9 lg:h-screen">
+            {/* <div className="relative z-10 flex shrink-0 items-center gap-2 overflow-x-auto border-b border-gray-200 bg-background/95 p-3 shadow-sm backdrop-blur-md sm:p-4">
                 <button type="button" className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-[#121c28] shadow-sm transition hover:border-[#00647c]/30 hover:text-[#00647c] sm:px-4">
                     <MdOutlineFilterList className="text-lg text-[#00647c]" />
                     Filtrer
                 </button>
 
-                <div className="flex shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-                    <button type="button" className="border-r border-gray-200 bg-[#d9dff5] px-3 py-2 text-sm font-semibold text-[#121c28] sm:px-4">
+                <div className="flex shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-background shadow-sm">
+                    <button type="button" className="border-r border-gray-200 bg-background px-3 py-2 text-sm font-semibold text-foreground sm:px-4">
                         Tout
                     </button>
 
-                    <button type="button" className="border-r border-gray-200 px-3 py-2 text-sm font-semibold text-[#121c28] transition hover:bg-gray-50 sm:px-4">
+                    <button type="button" className="border-r border-gray-200 px-3 py-2 text-sm font-semibold text-foreground transition hover:bg-gray-50 sm:px-4">
                         Actifs
                     </button>
 
@@ -155,7 +155,7 @@ export default function MapCard({ equipements, selectedPosition }: MapProps) {
                         Alertes
                     </button>
                 </div>
-            </div>
+            </div> */}
 
             <div className="relative z-0 min-h-0 flex-1">
                 <MapContainer center={[5.3364, -4.0267]} zoom={12} className="h-full w-full">
@@ -175,7 +175,7 @@ export default function MapCard({ equipements, selectedPosition }: MapProps) {
                                 icon={createMarkerIcon(equipement.reference, isOffline(equipement))}
                             >
                                 <Popup>
-                                    <div className="min-w-[180px]">
+                                    <div className="min-w-45">
                                         <p className="font-bold text-[#121c28]">
                                             {equipement.reference}
                                         </p>
